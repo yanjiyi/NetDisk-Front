@@ -687,19 +687,19 @@
 				
 					var filelist_len = document.getElementById("upload_dir").files.length
 					
-					// for (var i = 0; i < filelist_len; i++) {
-					// 	if(stop)
-					// 		return
+					for (var i = 0; i < filelist_len; i++) {
+						if(stop)
+							return
 							
-					// 	var current_file = document.getElementById("upload_dir").files[i];
-					// 	caclHash(current_file,hashlist)
+						var current_file = document.getElementById("upload_dir").files[i];
+						caclHash(current_file,hashlist)
 						
-					// 	while(dir_hash_done)
-					// 		setTimeout(1);
-					// }
+						while(dir_hash_done)
+							setTimeout(1);
+					}
 					
-					// console.log(typeof hashlist)
-					// console.log(hashlist)
+					console.log(typeof hashlist)
+					console.log(hashlist)
 					
 					for (var i=0;i<filelist_len;i++)
 					{
