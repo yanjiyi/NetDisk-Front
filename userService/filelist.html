@@ -347,7 +347,7 @@
             .uploaddate) + "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") +
           "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
           ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[
-            cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][
+            cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button>" + "<button  onclick=onDeleteClick('" + filelist_pages[cur_page][i].id + "') class='btn btn-outline-danger'>删除</button></td>" + (filelist_pages[cur_page][
             i
           ].dirmask ? ("<td><button onclick='onGetInClick(" + filelist_pages[cur_page][i].id +
             ")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
@@ -405,7 +405,7 @@
         "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") +
         "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
         ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page][i]
-        .id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][i].dirmask ? (
+        .id + ")' class='btn btn-outline-secondary'>详细</button></td>" + "<button  onclick=onDeleteClick('" + filelist_pages[cur_page][i].id + "') class='btn btn-outline-danger'>删除</button></td>" + (filelist_pages[cur_page][i].dirmask ? (
           "<td><button onclick='onGetInClick(" + filelist_pages[cur_page][i].id +
           ")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
       i++;
@@ -823,6 +823,15 @@
       alert("返回失败！")
     }
 
+  }
+
+  function onDeleteClick(id)
+  {
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST","/api/deleteService?id="+id,false)
+    xhr.send(null)
+
+    location.reload()
   }
 </script>
 
