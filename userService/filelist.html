@@ -798,12 +798,16 @@
 
     var dir = xhr.responseText
 
-    dir.substr(0,dir.lastIndexOf("/"))
+    console.log("之前目录："+dir)
+
+    dir = dir.substr(0,dir.lastIndexOf("/"))
 
     if(dir === "")
     {
       dir = "/"
     }
+
+    console.log("计算结果："+dir)
 
     if(changeWorkDir(dir))
     {
