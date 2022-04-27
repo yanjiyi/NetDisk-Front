@@ -59,8 +59,14 @@
       z-index: 1100 !important;
     }
 
-    .table-responsive {
-      max-height: 50%;
+    tbody {
+      display:block;
+      max-height:500px;
+      overflow-y:auto;
+    }
+    thead, tbody tr {
+      display:table;
+      table-layout:fixed;
     }
   </style>
 </head>
