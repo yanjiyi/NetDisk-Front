@@ -650,7 +650,7 @@
         for (var i = 0; i < filelist_len; i++) {
           var reader = new FileReader()
           reader.onload = function () {
-            
+            console.log(document.getElementById("upload_dir").files[i])
             var current_file = document.getElementById("upload_dir").files[i];
             var current_dirs = current_file.webkitRelativePath.split("/")
 
