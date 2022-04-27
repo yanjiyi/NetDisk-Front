@@ -131,7 +131,7 @@
         </ul>
       </nav>
 
-      <table class="table table-borderless table-hover table-responsive">
+      <table id="fileTable" class="table table-borderless table-hover table-responsive">
         <tr class="table-active">
           <td>文件名</td>
           <td>文件类型</td>
@@ -347,6 +347,7 @@
         tdArr.appendChild(tr);
       }
 
+      $('#fileTable').DataTable();
     },
     error: function () {
       serverErrorModal.show()
