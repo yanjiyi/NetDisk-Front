@@ -658,6 +658,7 @@
   }
 
   async function GetMD5(file) {
+
     console.log("正在读取文件：" + file.name);
     const fileReader = new SyncFileReader(file);
     const arrayBuffer = await fileReader.readAsBinaryString()
@@ -679,7 +680,7 @@
     $.ajax({
       url: "/api/pwd",
       type: "POST",
-      success: function (data) {
+      success: async function (data) {
         var origin_dir = data;
 
         var filelist_len = document.getElementById("upload_dir").files.length
