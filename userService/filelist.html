@@ -9,6 +9,7 @@
   <script src="../js/jquery-3.6.0.min.js" type="text/javascript"></script>
   <script src="../js/utils.js" type="text/javascript"></script>
   <script src="../js/spark-md5.min.js" type="text/javascript"></script>
+  <script src="../js/JSPager.js" type="text/javascript"></script>
   <style type="text/css">
     #mainDlg {
       /* width: 80%; */
@@ -144,6 +145,12 @@
 
         </tbody>
       </table>
+      <span id="s"></span>
+      <a href="#" onclick="page.firstPage();">首页</a>
+      <a href="#" onclick="page.prePage();">上一页</a>         
+      <a href="#" onclick="page.nextPage();">下一页</a>        
+      <a href="#" onclick="page.lastPage();">尾页</a>         
+      <span id="pageindex"></span>
     </div>
   </div>
 
@@ -316,6 +323,7 @@
 
 </body>
 <script type="text/javascript">
+  var page = null
   var serverErrorModal = new bootstrap.Modal(document.getElementById('serverErrorModal'), {
     keyboard: false
   })
@@ -347,7 +355,7 @@
         tdArr.appendChild(tr);
       }
 
-      $('#fileTable').DataTable();
+      page = new Page(parseInt(data.length/8),'fileTable','files_container','pageindex')
     },
     error: function () {
       serverErrorModal.show()
