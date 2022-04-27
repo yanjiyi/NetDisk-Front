@@ -118,7 +118,7 @@ Page.prototype.__updateTableRows__ = function () {
   //alert(this.dataRows.length);
   //alert(this.absolute+iCurrentRowCount);
   //alert("tempRows:"+tempRows.length);
-  document.getElementById(this.pageId).innerHTML = "当前页：" + (this.pageIndex + 1);
+  document.getElementById(this.pageId).innerHTML = (this.pageIndex + 1);
 };
 /*
 克隆原始操作行集合
