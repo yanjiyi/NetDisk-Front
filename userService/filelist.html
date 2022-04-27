@@ -132,22 +132,6 @@
           
         </ul>
       </nav>
-      <select class="form-select" id="pageConfig">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option selected value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
-      </select>
       <table id="fileTable" class="table table-borderless table-hover table-responsive">
         <tr class="table-active">
           <td>序号</td>
@@ -181,12 +165,6 @@
           </li>
         </ul>
       </nav>
-      <!-- <span id="s"></span>
-      <a href="#" onclick="page.firstPage();">首页</a>
-      <a href="#" onclick="page.prePage();">上一页</a>         
-      <a href="#" onclick="page.nextPage();">下一页</a>        
-      <a href="#" onclick="page.lastPage();">尾页</a>         
-       -->
     </div>
   </div>
 
@@ -397,12 +375,6 @@
       serverErrorModal.show()
     }
   })
-
-  var pageConfig = document.getElementById("pageConfig");
-  pageConfig.onchange = function(){
-    var showCount = this.options[this.selectedIndex].value
-    page = new Page(showCount,'fileTable','files_container','pageindex')
-  }
 
   $.ajax({
     url: "/api/getUser",
