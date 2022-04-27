@@ -1,830 +1,792 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>文件列表</title>
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<script src="../js/bootstrap.min.js" type="text/javascript"></script>
-		<script src="../js/jquery-3.6.0.min.js" type="text/javascript"></script>
-		<script src="../js/utils.js" type="text/javascript"></script>
-		<script src="../js/spark-md5.min.js" type="text/javascript"></script>
-		<style type="text/css">
-			#mainDlg {
-				/* width: 80%; */
-				margin: 0 auto;
-				margin-top: 10%;
-				border-radius: 10px;
-				box-sizing: border-box;
-				background-color: rgba(255, 255, 255, 0.3);
-				box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
-				padding: 20px;
-			}
 
-			.container {
-				border-radius: 10px;
-				box-sizing: border-box;
-				background-color: rgba(255, 255, 255, 0.3);
-				box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
-				padding: 20px;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
-			}
+<head>
+  <meta charset="utf-8">
+  <title>文件列表</title>
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../js/jquery-3.6.0.min.js" type="text/javascript"></script>
+  <script src="../js/utils.js" type="text/javascript"></script>
+  <script src="../js/spark-md5.min.js" type="text/javascript"></script>
+  <style type="text/css">
+    #mainDlg {
+      /* width: 80%; */
+      margin: 0 auto;
+      margin-top: 10%;
+      border-radius: 10px;
+      box-sizing: border-box;
+      background-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
+      padding: 20px;
+    }
 
-			.nav-item {
-				margin: 10px 0px;
-			}
-			
-			ul > li{
-				list-style: none;
-			}
-		</style>
-	</head>
-	<body style="background-image: url(../img/74279906_p0.png);background-attachment: fixed;
+    .container {
+      border-radius: 10px;
+      box-sizing: border-box;
+      background-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
+      padding: 20px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .nav-item {
+      margin: 10px 0px;
+    }
+
+    ul>li {
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body style="background-image: url(../img/74279906_p0.png);background-attachment: fixed;
 				background-size: cover;height: 100%;">
-		<div class="container">
-			<div class="header" style="height: 80px;">
-				<ul>
-					<li style="float: left;padding-right: 50px;">
-						<ul>
-							<li class="nav-item" >
-								<img src="../img/QQ图片20210929135729.jpg"
-									style="width: 100px;height: 100px;border-radius: 50px;"  id="userImg"/>
-							</li>
-							<li>
-								<span class="text-center" style="color: greenyellow;font-size: 30px;line-height: 30px;" id="userNickName">酸奶红豆包</span>
-							</li>
-						</ul>
-					</li>
-					<li style="float: left;">
-						<nav nav class="navbar navbar-light"
-							style="background-color: #e3f2fd;background-color: transparent;height: 80px;line-height: 80px;">
-							<!-- <div class="container-fluid">
+  <div class="container">
+    <div class="header" style="height: 80px;">
+      <ul>
+        <li style="float: left;padding-right: 50px;">
+          <ul>
+            <li class="nav-item">
+              <img src="../img/QQ图片20210929135729.jpg" style="width: 100px;height: 100px;border-radius: 50px;"
+                id="userImg" />
+            </li>
+            <li>
+              <span class="text-center" style="color: greenyellow;font-size: 30px;line-height: 30px;"
+                id="userNickName">酸奶红豆包</span>
+            </li>
+          </ul>
+        </li>
+        <li style="float: left;">
+          <nav nav class="navbar navbar-light"
+            style="background-color: #e3f2fd;background-color: transparent;height: 80px;line-height: 80px;">
+            <!-- <div class="container-fluid">
 						
 							</div> -->
-							<ul class="nav nav-pills">
-								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="#">文件列表</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="friends.html">好友列表</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="tasks.html">我的事务</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="sharefile.html">分享文件</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="userprofile.html">个人信息</a>
-								</li>
-							</ul>
-						</nav>
-					</li>
-				</ul>
-			</div>
-			
-			<div id="mainDlg" class="bg-gradient flex-column">
-				<nav nav class="navbar navbar-light">
-					<ul class="nav nav-pills">
-						<li class="nav-item dropdown" style="padding-right: 30px;">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-								aria-expanded="false">上传</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-										data-bs-target="#uploadFileModal">上传文件</a></li>
-								<li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-										data-bs-target="#uploadDirModal">上传文件夹</a></li>
-							</ul>
-						</li>
-						<li class="nav-item" style="padding-right: 30px;">
-							<button class="btn btn-outline-primary">创建文件夹</button>
-						</li>
-						<li class="nav-item" style="padding-right: 30px;">
-							<button class="btn btn-outline-primary">转到路径...</button>
-						</li>
-						<li class="nav-item" style="padding-right: 30px;">
-							<button class="btn btn-outline-primary">返回</button>
-						</li>
-					</ul>
-				</nav>
-				
-				<table class="table table-borderless table-hover" id="files_container">
-					<tr class="table-active">
-						<td>文件名</td>
-						<td>文件类型</td>
-						<td>上传日期</td>
-						<td>状态</td>
-						<td>操作</td>
-						<td></td>
-					</tr>
-				</table>
-				<div class="btn-group">
-					<button class="btn btn-outline-primary" onclick="onfront()"><</button>
-					<button class="btn btn-outline-primary" onclick="onback()">></button>
-				</div>
-			</div>
-		</div>
+            <ul class="nav nav-pills">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">文件列表</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="friends.html">好友列表</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="tasks.html">我的事务</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="sharefile.html">分享文件</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="userprofile.html">个人信息</a>
+              </li>
+            </ul>
+          </nav>
+        </li>
+      </ul>
+    </div>
 
-		<div class="modal fadev" id="serverErrorModal" tabindex="-1" aria-labelledby="serverErrorModal"
-			aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="serverErrorModal">服务器错误</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<h2 class="bg-danger">请求服务器异常！</h2>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div id="mainDlg" class="bg-gradient flex-column">
+      <nav nav class="navbar navbar-light">
+        <ul class="nav nav-pills">
+          <li class="nav-item dropdown" style="padding-right: 30px;">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+              aria-expanded="false">上传</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#uploadFileModal">上传文件</a>
+              </li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#uploadDirModal">上传文件夹</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" style="padding-right: 30px;">
+            <button class="btn btn-outline-primary">创建文件夹</button>
+          </li>
+          <li class="nav-item" style="padding-right: 30px;">
+            <button class="btn btn-outline-primary">转到路径...</button>
+          </li>
+          <li class="nav-item" style="padding-right: 30px;">
+            <button class="btn btn-outline-primary">返回</button>
+          </li>
+        </ul>
+      </nav>
 
-		<div class="modal fade text-center" id="detialModal" tabindex="-1" aria-labelledby="detialModal" aria-hidden="true">
-			<div class="modal-dialog" >
-				<div class="modal-content" style="display: inline-block;width: auto;">
-					<div class="modal-header">
-						<h5 class="modal-title" id="detialModal">详细信息</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<h5 class="text-center">Service表信息</h5>
-						<table class="table table-borderless table-hover table-striped">
-							<tr>
-								<td>ID</td>
-								<td>用户ID</td>
-								<td>文件名</td>
-								<td>系统文件表ID</td>
-								<td>状态</td>
-								<td>上传日期</td>
-								<td>父Service记录ID</td>
-								<td>是否是文件夹</td>
-							</tr>
-							<tr id="detialServiceInfo">
-								
-							</tr>
-						</table>
-						<h5 class="text-center">系统文件表信息</h5>
-						<table class="table table-borderless table-hover table-striped">
-							<tr>
-								<td>ID</td>
-								<td>文件名</td>
-								<td>文件MD5</td>
-								<td>文件位置</td>
-								<td>文件大小</td>
-								<td>启用</td>
-								<td>Root标志</td>
-							</tr>
-							<tr id="detialSysFileTabInfo">
-								
-							</tr>
-						</table>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
-					</div>
-				</div>
-			</div>
-		</div>
+      <table class="table table-borderless table-hover" id="files_container">
+        <tr class="table-active">
+          <td>文件名</td>
+          <td>文件类型</td>
+          <td>上传日期</td>
+          <td>状态</td>
+          <td>操作</td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="btn-group">
+        <button class="btn btn-outline-primary" onclick="onfront()">
+          <</button> <button class="btn btn-outline-primary" onclick="onback()">>
+        </button>
+      </div>
+    </div>
+  </div>
 
-		<div class="modal fade text-center" id="uploadFileModal" tabindex="-1" aria-labelledby="uploadFileModal" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content" style="display: inline-block;width: auto;">
-					<div class="modal-header">
-						<h5 class="modal-title" id="uploadFileModal">上传文件</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<table class="table table-borderless table-hover">
-							<tr class="row">
-								<td><input type="file" id="upload_file" /></td>
-							</tr>
-							<tr class="row">
-								<!-- <td>上传进度：</td> -->
-								<td>
-									<div class="progress">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-											role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-											style="width: 0%" id="upload_progress">上传进度</div>
-									</div>
-								</td>
-							</tr>
-							<tr class="row">
-								<!-- <td>计算文件指纹：</td> -->
-								<td>
-									<div class="progress">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-											role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-											style="width: 0%" id="filehash_progress">计算文件指纹</div>
-									</div>
-								</td>
-							</tr>
-							<tr class="row">
-								<td>
-									<pre id=log></pre>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUploadFile()">关闭</button>
-						<button type="button" class="btn btn-primary" onclick="uploadFile()">上传</button>
-					</div>
-				</div>
-			</div>
-		</div>
+  <div class="modal fadev" id="serverErrorModal" tabindex="-1" aria-labelledby="serverErrorModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="serverErrorModal">服务器错误</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h2 class="bg-danger">请求服务器异常！</h2>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-		<div class="modal fade text-center" id="uploadDirModal" tabindex="-1" aria-labelledby="uploadDirModal" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content" style="display: inline-block;width: auto;">
-					<div class="modal-header">
-						<h5 class="modal-title" id="uploadDirModal">上传文件夹</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body" style="display: inline-block; width: 800px;">
-						<table class="table table-borderless table-hover">
-							<tr class="row">
-								<td><input type="file" id="upload_dir" webkitdirectory directory /></td>
-							</tr>
-							<tr class="row">
-								<!-- <td>上传进度：</td> -->
-								<td>
-									<!-- <div class="progress">
+  <div class="modal fade text-center" id="detialModal" tabindex="-1" aria-labelledby="detialModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="display: inline-block;width: auto;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detialModal">详细信息</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 class="text-center">Service表信息</h5>
+          <table class="table table-borderless table-hover table-striped">
+            <tr>
+              <td>ID</td>
+              <td>用户ID</td>
+              <td>文件名</td>
+              <td>系统文件表ID</td>
+              <td>状态</td>
+              <td>上传日期</td>
+              <td>父Service记录ID</td>
+              <td>是否是文件夹</td>
+            </tr>
+            <tr id="detialServiceInfo">
+
+            </tr>
+          </table>
+          <h5 class="text-center">系统文件表信息</h5>
+          <table class="table table-borderless table-hover table-striped">
+            <tr>
+              <td>ID</td>
+              <td>文件名</td>
+              <td>文件MD5</td>
+              <td>文件位置</td>
+              <td>文件大小</td>
+              <td>启用</td>
+              <td>Root标志</td>
+            </tr>
+            <tr id="detialSysFileTabInfo">
+
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade text-center" id="uploadFileModal" tabindex="-1" aria-labelledby="uploadFileModal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="display: inline-block;width: auto;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadFileModal">上传文件</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-borderless table-hover">
+            <tr class="row">
+              <td><input type="file" id="upload_file" /></td>
+            </tr>
+            <tr class="row">
+              <!-- <td>上传进度：</td> -->
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="upload_progress">上传进度
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <!-- <td>计算文件指纹：</td> -->
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="filehash_progress">
+                    计算文件指纹</div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td>
+                <pre id=log></pre>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUploadFile()">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="uploadFile()">上传</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade text-center" id="uploadDirModal" tabindex="-1" aria-labelledby="uploadDirModal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="display: inline-block;width: auto;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadDirModal">上传文件夹</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="display: inline-block; width: 800px;">
+          <table class="table table-borderless table-hover">
+            <tr class="row">
+              <td><input type="file" id="upload_dir" webkitdirectory directory /></td>
+            </tr>
+            <tr class="row">
+              <!-- <td>上传进度：</td> -->
+              <td>
+                <!-- <div class="progress">
 										<div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
 											role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
 											style="width: 0%" id="uploaddir_progress"></div>
 									</div> -->
-									<span id="upload_action"></span>
-								</td>
-							</tr>
-							<tr class="row">
-								<!-- <td>计算文件指纹：</td> -->
-								<td>
-									<div class="progress">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-											role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-											style="width: 0%" id="filehashdir_progress">计算文件指纹</div>
-									</div>
-								</td>
-							</tr>
-							<tr class="row">
-								<td>
-									<pre id=log_dir></pre>
-								</td>
-								<td>
-									<pre id="cacl_result"></pre>
-								</td>
-								<td>
-									<pre id="status"></pre>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUpLoadDir()">关闭</button>
-						<button type="button" class="btn btn-primary" onclick="uploadDir()">上传</button>
-					</div>
-				</div>
-			</div>
-		</div>
+                <span id="upload_action"></span>
+              </td>
+            </tr>
+            <tr class="row">
+              <!-- <td>计算文件指纹：</td> -->
+              <td>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar"
+                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"
+                    id="filehashdir_progress">计算文件指纹</div>
+                </div>
+              </td>
+            </tr>
+            <tr class="row">
+              <td>
+                <pre id=log_dir></pre>
+              </td>
+              <td>
+                <pre id="cacl_result"></pre>
+              </td>
+              <td>
+                <pre id="status"></pre>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUpLoadDir()">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="uploadDir()">上传</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	</body>
-	<script type="text/javascript">
-		var serverErrorModal = new bootstrap.Modal(document.getElementById('serverErrorModal'), {
-			keyboard: false
-		})
+</body>
+<script type="text/javascript">
+  var serverErrorModal = new bootstrap.Modal(document.getElementById('serverErrorModal'), {
+    keyboard: false
+  })
 
-		var detialModal = new bootstrap.Modal(document.getElementById('detialModal'), {
-			keyboard: false
-		})
-
-
-		var filelist_pages = []
-		var spilt_size = 10
-		var cur_page = 0;
-
-		$.ajax({
-			type: "POST",
-			url: "/api/listCur",
-			success: function(data) {
-				var cur_step = 1;
-				var page = []
-				console.log("data Size : " + data.length)
-				for (var i = 0; i < data.length; i++) {
-					var file = data[i]
-					console.log("file : " + file)
-					if (cur_step <= (data.length < 10 ? data.length : 10)) {
-						page.push(file)
-						
-						if (cur_step == (data.length < 10 ? data.length : 10)) {
-							console.log(page)
-							filelist_pages.push(page)
-							page = []
-						}
-						
-						cur_step++
-					}
-				}
-				
-				console.log(file)
-
-				var tdArr = document.getElementById("files_container").firstElementChild
-				for (var i = 0; i < (data.length >= 10 ? 10 : data.length) ; i++) {
-					var tr = document.createElement("tr");
-					tr.style.lineHeight = '38px';
-					tr.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td>" + "<td>" + (filelist_pages[cur_page][i].dirmask ? "文件夹" : "文件") + "</td>" + "<td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) + "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") + "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id + ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][i].dirmask ? ("<td><button onclick='onGetInClick(\"" + filelist_pages[cur_page][i].userfilename + "\")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
-					// tr.innerHTML = '<td>' + filelist_pages[cur_page][i].userfilename + '</td><td>' +
-					// 	filelist_pages[cur_page][i].dirmask ? '文件夹' : '文件' + '</td><td>' + timestampToTime(
-					// 		filelist_pages[cur_page][i].uploaddate) + '</td><td>' + filelist_pages[cur_page][i]
-					// 	.status ? '可用' : '不可用' + '</td><td><button onclick="onDownloadClick(' + filelist_pages[
-					// 		cur_page][i].id +
-					// 	')" class="btn btn-outline-primary">下载</button><button onclick="onDetialClick(' +
-					// 	filelist_pages[cur_page][i].id + ')" class="btn btn-outline-secondary">详细</button></td>' +
-					// 	filelist_pages[cur_page][i].dirmask ? '<td><button onclick="onGetInClick(' + filelist_pages[cur_page][i].id + ')" class="btn btn-outline-primary">进入</button></td>' : '';
-					tdArr.appendChild(tr);
-				}
-
-			},
-			error: function() {
-				serverErrorModal.show()
-			}
-		})
-		
-		
-		$.ajax({
-			url:"/api/getUser",
-			type:"POST",
-			success:function(data){
-				if(null!=data&&""!=data)
-				{
-					document.getElementById("userImg").setAttribute("src","/api/download?recorid="+data.imgserviceid)
-					document.getElementById("userNickName").innerHTML = data.nickname
-				}
-				else{
-					alert("获取用户信息失败！")
-					window.location.href = '../index.html'
-				}
-			},
-			error:function(){
-				alert("获取用户信息失败！")
-				window.location.href = '../index.html'
-			}
-		})
-
-		function updateTable() {
-			var tab = document.getElementById("files_container");
-			var i = 0;
-			for (var cur_row = 0; cur_row < filelist_pages.length; cur_row++) {
-				var uRow = tab.rows[cur_row];
-				// uRow.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td><td>" + filelist_pages[cur_page][i]
-				// 	.dirmask ? "文件夹" : "文件" + "</td><td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) +
-				// 	"</td><td>" + filelist_pages[cur_page][i].status ? "可用" : "不可用" +
-				// 	"</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
-				// 	")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page]
-				// 	[i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" +
-				// 		filelist_pages[cur_page][i].dirmask ? '<td><button onclick="onGetInClick(' + filelist_pages[cur_page][i].id + ')" class="btn btn-outline-primary">进入</button></td>' : '';
-				uRow.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td>" + "<td>" + (filelist_pages[cur_page][i].dirmask ? "文件夹" : "文件") + "</td>" + "<td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) + "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") + "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id + ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][i].dirmask ? ("<td><button onclick='onGetInClick(\"" + filelist_pages[cur_page][i].userfilename + "\")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
-				i++;
-			}
-		}
-
-		function onfront() {
-			if (filelist_pages.length === 0||filelist_pages.length === 1)
-				return;
-
-			cur_page--;
-			if (cur_page < 0) {
-				cur_page = filelist_pages.length - 1
-			}
-
-			updateTable()
-		}
-
-		function onback() {
-			if (filelist_pages.length === 0||filelist_pages.length === 1)
-				return;
-
-			cur_page++;
-			if (cur_page >= filelist_pages.length - 1) {
-				cur_page = 0;
-			}
-
-			updateTable()
-		}
-
-		function onDownloadClick(id) {
-			// $.ajax({
-			// 	url: "/api/download?recorid=" + id,
-			// 	type: "POST",
-			// 	success: function(data) {
-
-			// 	},
-			// 	error: function() {
-			// 		serverErrorModal.show()
-			// 	}
-			// })
-			window.open("/api/download?recorid="+id)
-		}
-
-		function onDetialClick(id) {
-			
-			$.ajax({
-				url: "/api/queryService?id="+id,
-				type: "POST",
-				success: function(data_svr) {
-					$.ajax({
-						url: "/api/querySysFileTab?id="+data_svr.sysfilerecordid,
-						type: "POST",
-						success: function(data) {
-							var serInfo = document.getElementById("detialServiceInfo")
-								
-							
-							serInfo.innerHTML = "<tr><td>" + data_svr.id + "</td><td>" + data_svr.userid + "</td><td>" + data_svr.userfilename + "</td><td>" +
-								data_svr.sysfilerecordid + "</td><td>" + data_svr.status +
-								"</td><td>" + timestampToTime(data_svr.uploaddate) + "</td><td>" +
-								data_svr.parentid + "</td><td>" + data_svr.dirmask + "</td></tr>";
-
-							var SysInfo = document.getElementById("detialSysFileTabInfo")
-								
-							SysInfo.innerHTML = "<tr><td>" + data.id + "</td><td>" + data.filename +
-								"</td><td>" + data.filehash + "</td><td>" +
-								data.location + "</td><td>" + getFileSize(data.filesize) +
-								"</td><td>" + data.inuse + "</td><td>" + data.rootmask + "</td></tr>";
-								
-							detialModal.show()
-						},
-						error: function() {
-							serverErrorModal.show()
-						}
-					})
-				},
-				error: function() {
-					serverErrorModal.show()
-				}
-			})
-		}
-
-		var current_md5 = "";
-		var filename = "";
-		var filehashdone = false;
-		var uploadFile_stop = false;
+  var detialModal = new bootstrap.Modal(document.getElementById('detialModal'), {
+    keyboard: false
+  })
 
 
-		var log = document.getElementById("log");
-		document.getElementById("upload_file").addEventListener("change", function() {
-			var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-				file = this.files[0],
-				chunkSize = 2097152, // 每次读取2MB
-				chunks = Math.ceil(file.size / chunkSize),
-				currentChunk = 0,
-				spark = new SparkMD5.ArrayBuffer(),
-				frOnload = function(e) {
-					// log.innerHTML+="\n读取文件 "+parseInt(currentChunk+1)+" of "+chunks;
-					var progressRate = (parseInt(currentChunk + 1) / chunks) * 100 + '%'
-					// $('.progress_hash > div').css('width',progressRate);
-					document.getElementById("filehash_progress").style.width = progressRate;
+  var filelist_pages = []
+  var spilt_size = 10
+  var cur_page = 0;
 
-					spark.append(e.target.result);
-					currentChunk++;
-					if (currentChunk < chunks){
-						if(uploadFile_stop)
-						{
-							uploadFile_stop = false
-							return
-						}
-						loadNext();
-					}
-					else {
-						current_md5 = spark.end()
-						filename = file.name
-						filehashdone = true
-						log.innerHTML += "\n读取完成！\n\n文件md5:" + current_md5 + "\n";
-					}
-				},
-				frOnerror = function() {
-					log.innerHTML += "\n出错了.";
-				};
+  $.ajax({
+    type: "POST",
+    url: "/api/listCur",
+    success: function (data) {
+      var cur_step = 1;
+      var page = []
+      console.log("data Size : " + data.length)
+      for (var i = 0; i < data.length; i++) {
+        var file = data[i]
+        console.log("file : " + file)
+        if (cur_step <= (data.length < 10 ? data.length : 10)) {
+          page.push(file)
 
-			function loadNext() {
-				var fileReader = new FileReader();
-				fileReader.onload = frOnload;
-				fileReader.onerror = frOnerror;
-				var start = currentChunk * chunkSize,
-					end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
-				fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
-			};
-			log.style.display = "inline-block";
-			log.innerHTML = "选择文件: " + file.name + " (" + file.size.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g,
-				',') + " bytes)\n";
-			loadNext();
-		});
+          if (cur_step == (data.length < 10 ? data.length : 10)) {
+            console.log(page)
+            filelist_pages.push(page)
+            page = []
+          }
 
-		function stopUploadFile()
-		{
-			uploadFile_stop = true;
-		}
-		
-		function uploadFile() {
-			if (document.getElementById("upload_file").value.length === 0) {
-				alert("请选择一个文件！")
-				return
-			}
+          cur_step++
+        }
+      }
 
-			if (!filehashdone) {
-				alert("请等待文件指纹计算完成！")
-				return
-			}
-			
-			var formdata = new FormData()
+      console.log(file)
 
-			formdata.append("file", document.getElementById("upload_file").files[0])
-			formdata.append("fileHash", current_md5)
-			formdata.append("isDir", false);
-			formdata.append("dirName", "")
-			formdata.append("fileName",document.getElementById("upload_file").files[0].name)
+      var tdArr = document.getElementById("files_container").firstElementChild
+      for (var i = 0; i < (data.length >= 10 ? 10 : data.length); i++) {
+        var tr = document.createElement("tr");
+        tr.style.lineHeight = '38px';
+        tr.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td>" + "<td>" + (filelist_pages[
+            cur_page][i].dirmask ? "文件夹" : "文件") + "</td>" + "<td>" + timestampToTime(filelist_pages[cur_page][i]
+            .uploaddate) + "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") +
+          "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
+          ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[
+            cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][
+            i
+          ].dirmask ? ("<td><button onclick='onGetInClick(\"" + filelist_pages[cur_page][i].userfilename +
+            "\")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
+        // tr.innerHTML = '<td>' + filelist_pages[cur_page][i].userfilename + '</td><td>' +
+        // 	filelist_pages[cur_page][i].dirmask ? '文件夹' : '文件' + '</td><td>' + timestampToTime(
+        // 		filelist_pages[cur_page][i].uploaddate) + '</td><td>' + filelist_pages[cur_page][i]
+        // 	.status ? '可用' : '不可用' + '</td><td><button onclick="onDownloadClick(' + filelist_pages[
+        // 		cur_page][i].id +
+        // 	')" class="btn btn-outline-primary">下载</button><button onclick="onDetialClick(' +
+        // 	filelist_pages[cur_page][i].id + ')" class="btn btn-outline-secondary">详细</button></td>' +
+        // 	filelist_pages[cur_page][i].dirmask ? '<td><button onclick="onGetInClick(' + filelist_pages[cur_page][i].id + ')" class="btn btn-outline-primary">进入</button></td>' : '';
+        tdArr.appendChild(tr);
+      }
 
-			$.ajax({
-				url: '/api/upload',
-				type: 'post',
-				data: formdata,
-				processData: false,
-				contentType: false,
-				xhr: function() {
-					var xhr = new XMLHttpRequest()
-
-					xhr.upload.addEventListener('progress', function(e) {
-						var progressRate = (e.loaded / e.total) * 100 + '%'
-
-						// $('.progress > div').css('width',progressRate);
-
-						document.getElementById("upload_progress").style.width = progressRate;
-					})
-
-					return xhr;
-				},
-				success: function(data) {
-					alert(data.errorMsg)
-					filehashdone = false;
-					location.reload()
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					alert(textStatus);
-				}
-			});
-		}
-		
-		
-		var stop = false
-
-		var dir_hash_done = false;
-		
-		function caclHash(file_obj,result_arr) {
-			dir_hash_done = false;
-			var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-				file = file_obj,
-				chunkSize = 2097152, // 每次读取2MB
-				chunks = Math.ceil(file_obj.size / chunkSize),
-				currentChunk = 0,
-				spark = new SparkMD5.ArrayBuffer(),
-				frOnload = function(e) {
-					// log.innerHTML+="\n读取文件 "+parseInt(currentChunk+1)+" of "+chunks;
-					var progressRate = (parseInt(currentChunk + 1) / chunks) * 100 + '%'
-					// $('.progress_hash > div').css('width',progressRate);
-					document.getElementById("filehashdir_progress").style.width = progressRate;
-
-					spark.append(e.target.result);
-					currentChunk++;
-					if (currentChunk < chunks){
-						if(stop)
-							return
-						loadNext();
-					}
-					else {
-						// current_md5 = spark.end()
-						// filename = file.name
-						// filehashdone = true
-						var result = spark.end()
-						cacl_result.innerHTML = "\n读取完成！\n\n文件md5:" + result + "\n";
-						
-						result_arr.push(result)
-						
-						dir_hash_done = true;
-					}
-				},
-				frOnerror = function() {
-					cacl_result.innerHTML = "\n出错了.";
-				};
+    },
+    error: function () {
+      serverErrorModal.show()
+    }
+  })
 
 
-			function loadNext() {
-				var fileReader = new FileReader();
-				fileReader.onload = frOnload;
-				fileReader.onerror = frOnerror;
-				var start = currentChunk * chunkSize,
-					end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
-				fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
-			};
-			log_dir.style.display = "inline-block";
-			log_dir.innerHTML = "选择文件: " + file_obj.name + " (" + file_obj.size.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g,
-				',') + " bytes)\n";
-			loadNext();
-		}
+  $.ajax({
+    url: "/api/getUser",
+    type: "POST",
+    success: function (data) {
+      if (null != data && "" != data) {
+        document.getElementById("userImg").setAttribute("src", "/api/download?recorid=" + data.imgserviceid)
+        document.getElementById("userNickName").innerHTML = data.nickname
+      } else {
+        alert("获取用户信息失败！")
+        window.location.href = '../index.html'
+      }
+    },
+    error: function () {
+      alert("获取用户信息失败！")
+      window.location.href = '../index.html'
+    }
+  })
 
-		function changeWorkDir(dir){
-			var xhr = new XMLHttpRequest()
-			var url = "/api/cd?where=" + dir;
-			
-			xhr.open('POST',url,false)
-			xhr.send(null)
-			
-			var info = xhr.responseText
-			var obj = eval("("+info+")");
-			if(obj.StatusCode===2000)
-				return true;
-			
-			return false;
-		}
-		
-		function createDir(dirname){
-			var formData = new FormData()
-			formData.append("file",document.getElementById("upload_dir").files[0])
-			formData.append("fileHash",0)
-			formData.append("isDir",true)
-			formData.append("dirName",dirname)
-			formData.append("fileName","Unuse")
-			
-			var xhr = new XMLHttpRequest()
-			xhr.open("POST","/api/upload",false)
-			xhr.send(formData)
-			
-			var info = xhr.responseText
-			var obj = eval("("+info+")");
-			if(obj.StatusCode === 2000)
-				return true;
-				
-			return false;
-		}
-		
-		
-		
-		function uploadDir() {
-			// console.log(document.getElementById("upload_dir").files.length)
-			// var filelist = document.getElementById("upload_dir").files[0]
-			// console.log(filelist.webkitRelativePath.split("/"))
-			stop = false
-			
-			$.ajax({
-				url: "/api/pwd",
-				type: "POST",
-				success: function(data) {
-					var hashlist = new Array()
-					var origin_dir = data;
-				
-					var filelist_len = document.getElementById("upload_dir").files.length
-					
-					for (var i = 0; i < filelist_len; i++) {
-						if(stop)
-							return
-							
-						var current_file = document.getElementById("upload_dir").files[i];
-						caclHash(current_file,hashlist)
-						
-						while(dir_hash_done)
-							setTimeout(1);
-					}
-					
-					console.log(typeof hashlist)
-					console.log(hashlist)
-					
-					for (var i=0;i<filelist_len;i++)
-					{
-						var current_file = document.getElementById("upload_dir").files[i];
-						var current_dirs = current_file.webkitRelativePath.split("/")
-						
-						//Try Cd , failed then create and retry
-						var dirs_len = current_dirs.length
-						// var targetDirInPos = false
-						var targetDir = origin_dir
-						for(var k=0;k<(dirs_len-1);k++)
-						{
-							if(targetDir === "/")
-							{
-								targetDir = targetDir + current_dirs[k];
-							}else{
-								targetDir = targetDir +  "/" + current_dirs[k];
-							}
-							
-							if(!changeWorkDir(targetDir))
-							{
-								if(!createDir(current_dirs[k]))
-								{
-									alert("创建文件夹：" + current_dirs[k] + "失败！终止动作！")
-									// targetDirInPos = false
-									changeWorkDir(origin_dir);
-									return
-								}else if(!changeWorkDir(targetDir)){
-									alert("创建文件夹：" + current_dirs[k] + "成功！但CD失败！终止动作！")
-									// targetDirInPos = false
-									changeWorkDir(origin_dir);
-									return
-								}
-								// else{
-								// 	targetDirInPos = true
-								// }
-							}
-							// else{
-							// 	targetDirInPos = true
-							// }
-						}
-						
-						//Dir in pos
-						// var hash = hashlist[i]
-						// console.log(i)
-            
-						console.log("Current File Hash : " + hashlist.at(i))
-						if(hashlist.at(i) === ""||hashlist.at(i) === undefined||hashlist.at(i) == "None")
-						{
-							alert("没有找到文件："+current_file.name+"的文件指纹！");
-							changeWorkDir(origin_dir);
-							return;
-						}
-						var formData = new FormData();
-						formData.append("file",current_file)
-						formData.append("fileHash",hashlist.at(i))
-						formData.append("isDir",false)
-						formData.append("dirName","emtpy")
-						formData.append("fileName",current_dirs[dirs_len-1])
-						
-						var upload_action = document.getElementById("upload_action");
-						upload_action.innerHTML = "正在上传：" + current_file.name + "，请等待。。。"
-						var xhr = new XMLHttpRequest()
-						xhr.open("POST","/api/upload",false)
-						// xhr.upload.addEventListener('progress',function(e){
-						// 	var progressRate = (e.loaded / e.total) * 100 + '%'
-							
-						// 	// $('.progress > div').css('width',progressRate);
-							
-						// 	document.getElementById("uploaddir_progress").style.width = progressRate;
-						// })
-						xhr.send(formData)
-						
-						var info = xhr.responseText
-						var obj = eval("("+info+")");
-						if(obj.StatusCode === 2000)
-						{
-							upload_action.innerHTML = current_file.name+"，"+obj.errorMsg
-							console.log(current_file.name+"，上传成功！"+obj.errorMsg)
-						}else{
-							alert("文件："+current_file.name+"，上传失败！终止动作！")
-							alert(obj.errorMsg)
-							changeWorkDir(origin_dir);
-							return
-						}
-						//还原最开始工作路径
-						// targetDir = origin_dir
-					}
-					
-					alert("上传完毕！")
-					
-					location.reload()
-				},
-				error: function() {
-					alert("请求PWD错误！服务器异常！");
-				}
-			})
-		}
-		
-		function stopUpLoadDir()
-		{
-			stop = true;
-		}
-		
-		function onGetInClick(dirname)
-		{
-			var xhr = new XMLHttpRequest()
-			xhr.open("POST","/api/pwd",false);
-			xhr.send(null)
-			
-			var info = xhr.responseText
-			var result = ""
-			if(info==="/")
-			{
-				result = info + dirname;
-			}else{
-				result = info + "/" + dirname;
-			}
-			
-			if(changeWorkDir(result))
-			{
-				location.reload()
-			}else{
-				alert("进入文件夹失败！")
-			}
-		}
-	</script>
+  function updateTable() {
+    var tab = document.getElementById("files_container");
+    var i = 0;
+    for (var cur_row = 0; cur_row < filelist_pages.length; cur_row++) {
+      var uRow = tab.rows[cur_row];
+      // uRow.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td><td>" + filelist_pages[cur_page][i]
+      // 	.dirmask ? "文件夹" : "文件" + "</td><td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) +
+      // 	"</td><td>" + filelist_pages[cur_page][i].status ? "可用" : "不可用" +
+      // 	"</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
+      // 	")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page]
+      // 	[i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" +
+      // 		filelist_pages[cur_page][i].dirmask ? '<td><button onclick="onGetInClick(' + filelist_pages[cur_page][i].id + ')" class="btn btn-outline-primary">进入</button></td>' : '';
+      uRow.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td>" + "<td>" + (filelist_pages[cur_page][
+          i
+        ].dirmask ? "文件夹" : "文件") + "</td>" + "<td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) +
+        "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") +
+        "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
+        ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page][i]
+        .id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][i].dirmask ? (
+          "<td><button onclick='onGetInClick(\"" + filelist_pages[cur_page][i].userfilename +
+          "\")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
+      i++;
+    }
+  }
+
+  function onfront() {
+    if (filelist_pages.length === 0 || filelist_pages.length === 1)
+      return;
+
+    cur_page--;
+    if (cur_page < 0) {
+      cur_page = filelist_pages.length - 1
+    }
+
+    updateTable()
+  }
+
+  function onback() {
+    if (filelist_pages.length === 0 || filelist_pages.length === 1)
+      return;
+
+    cur_page++;
+    if (cur_page >= filelist_pages.length - 1) {
+      cur_page = 0;
+    }
+
+    updateTable()
+  }
+
+  function onDownloadClick(id) {
+    // $.ajax({
+    // 	url: "/api/download?recorid=" + id,
+    // 	type: "POST",
+    // 	success: function(data) {
+
+    // 	},
+    // 	error: function() {
+    // 		serverErrorModal.show()
+    // 	}
+    // })
+    window.open("/api/download?recorid=" + id)
+  }
+
+  function onDetialClick(id) {
+
+    $.ajax({
+      url: "/api/queryService?id=" + id,
+      type: "POST",
+      success: function (data_svr) {
+        $.ajax({
+          url: "/api/querySysFileTab?id=" + data_svr.sysfilerecordid,
+          type: "POST",
+          success: function (data) {
+            var serInfo = document.getElementById("detialServiceInfo")
+
+
+            serInfo.innerHTML = "<tr><td>" + data_svr.id + "</td><td>" + data_svr.userid + "</td><td>" +
+              data_svr.userfilename + "</td><td>" +
+              data_svr.sysfilerecordid + "</td><td>" + data_svr.status +
+              "</td><td>" + timestampToTime(data_svr.uploaddate) + "</td><td>" +
+              data_svr.parentid + "</td><td>" + data_svr.dirmask + "</td></tr>";
+
+            var SysInfo = document.getElementById("detialSysFileTabInfo")
+
+            SysInfo.innerHTML = "<tr><td>" + data.id + "</td><td>" + data.filename +
+              "</td><td>" + data.filehash + "</td><td>" +
+              data.location + "</td><td>" + getFileSize(data.filesize) +
+              "</td><td>" + data.inuse + "</td><td>" + data.rootmask + "</td></tr>";
+
+            detialModal.show()
+          },
+          error: function () {
+            serverErrorModal.show()
+          }
+        })
+      },
+      error: function () {
+        serverErrorModal.show()
+      }
+    })
+  }
+
+  var current_md5 = "";
+  var filename = "";
+  var filehashdone = false;
+  var uploadFile_stop = false;
+
+
+  var log = document.getElementById("log");
+  document.getElementById("upload_file").addEventListener("change", function () {
+    var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+      file = this.files[0],
+      chunkSize = 2097152, // 每次读取2MB
+      chunks = Math.ceil(file.size / chunkSize),
+      currentChunk = 0,
+      spark = new SparkMD5.ArrayBuffer(),
+      frOnload = function (e) {
+        // log.innerHTML+="\n读取文件 "+parseInt(currentChunk+1)+" of "+chunks;
+        var progressRate = (parseInt(currentChunk + 1) / chunks) * 100 + '%'
+        // $('.progress_hash > div').css('width',progressRate);
+        document.getElementById("filehash_progress").style.width = progressRate;
+
+        spark.append(e.target.result);
+        currentChunk++;
+        if (currentChunk < chunks) {
+          if (uploadFile_stop) {
+            uploadFile_stop = false
+            return
+          }
+          loadNext();
+        } else {
+          current_md5 = spark.end()
+          filename = file.name
+          filehashdone = true
+          log.innerHTML += "\n读取完成！\n\n文件md5:" + current_md5 + "\n";
+        }
+      },
+      frOnerror = function () {
+        log.innerHTML += "\n出错了.";
+      };
+
+    function loadNext() {
+      var fileReader = new FileReader();
+      fileReader.onload = frOnload;
+      fileReader.onerror = frOnerror;
+      var start = currentChunk * chunkSize,
+        end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
+      fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
+    };
+    log.style.display = "inline-block";
+    log.innerHTML = "选择文件: " + file.name + " (" + file.size.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g,
+      ',') + " bytes)\n";
+    loadNext();
+  });
+
+  function stopUploadFile() {
+    uploadFile_stop = true;
+  }
+
+  function uploadFile() {
+    if (document.getElementById("upload_file").value.length === 0) {
+      alert("请选择一个文件！")
+      return
+    }
+
+    if (!filehashdone) {
+      alert("请等待文件指纹计算完成！")
+      return
+    }
+
+    var formdata = new FormData()
+
+    formdata.append("file", document.getElementById("upload_file").files[0])
+    formdata.append("fileHash", current_md5)
+    formdata.append("isDir", false);
+    formdata.append("dirName", "")
+    formdata.append("fileName", document.getElementById("upload_file").files[0].name)
+
+    $.ajax({
+      url: '/api/upload',
+      type: 'post',
+      data: formdata,
+      processData: false,
+      contentType: false,
+      xhr: function () {
+        var xhr = new XMLHttpRequest()
+
+        xhr.upload.addEventListener('progress', function (e) {
+          var progressRate = (e.loaded / e.total) * 100 + '%'
+
+          // $('.progress > div').css('width',progressRate);
+
+          document.getElementById("upload_progress").style.width = progressRate;
+        })
+
+        return xhr;
+      },
+      success: function (data) {
+        alert(data.errorMsg)
+        filehashdone = false;
+        location.reload()
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        alert(textStatus);
+      }
+    });
+  }
+
+
+  var stop = false
+
+  function changeWorkDir(dir) {
+    var xhr = new XMLHttpRequest()
+    var url = "/api/cd?where=" + dir;
+
+    xhr.open('POST', url, false)
+    xhr.send(null)
+
+    var info = xhr.responseText
+    var obj = eval("(" + info + ")");
+    if (obj.StatusCode === 2000)
+      return true;
+
+    return false;
+  }
+
+  function createDir(dirname) {
+    var formData = new FormData()
+    formData.append("file", document.getElementById("upload_dir").files[0])
+    formData.append("fileHash", 0)
+    formData.append("isDir", true)
+    formData.append("dirName", dirname)
+    formData.append("fileName", "Unuse")
+
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST", "/api/upload", false)
+    xhr.send(formData)
+
+    var info = xhr.responseText
+    var obj = eval("(" + info + ")");
+    if (obj.StatusCode === 2000)
+      return true;
+
+    return false;
+  }
+
+
+
+  function uploadDir() {
+    // console.log(document.getElementById("upload_dir").files.length)
+    // var filelist = document.getElementById("upload_dir").files[0]
+    // console.log(filelist.webkitRelativePath.split("/"))
+    stop = false
+
+    $.ajax({
+      url: "/api/pwd",
+      type: "POST",
+      success: function (data) {
+        var origin_dir = data;
+
+        var filelist_len = document.getElementById("upload_dir").files.length
+
+        for (var i = 0; i < filelist_len; i++) {
+          var current_file = document.getElementById("upload_dir").files[i];
+          var current_dirs = current_file.webkitRelativePath.split("/")
+
+          //Try Cd , failed then create and retry
+          var dirs_len = current_dirs.length
+          // var targetDirInPos = false
+          var targetDir = origin_dir
+          for (var k = 0; k < (dirs_len - 1); k++) {
+            if (targetDir === "/") {
+              targetDir = targetDir + current_dirs[k];
+            } else {
+              targetDir = targetDir + "/" + current_dirs[k];
+            }
+
+            if (!changeWorkDir(targetDir)) {
+              if (!createDir(current_dirs[k])) {
+                alert("创建文件夹：" + current_dirs[k] + "失败！终止动作！")
+                // targetDirInPos = false
+                changeWorkDir(origin_dir);
+                return
+              } else if (!changeWorkDir(targetDir)) {
+                alert("创建文件夹：" + current_dirs[k] + "成功！但CD失败！终止动作！")
+                // targetDirInPos = false
+                changeWorkDir(origin_dir);
+                return
+              }
+              // else{
+              // 	targetDirInPos = true
+              // }
+            }
+            // else{
+            // 	targetDirInPos = true
+            // }
+          }
+
+          //Dir in pos
+          // var hash = hashlist[i]
+          // console.log(i)
+
+          console.log("正在读取文件：" + current_file.name);
+          var filereader = new FileReader()
+          var ready = false
+          var result = ''
+
+          var check = function () {
+            if (ready === true) {
+              return;
+            }
+
+            setTimeout(check, 1000);
+          }
+
+          check()
+
+          filereader.onloadend = function (evt) {
+            result = evt.target.result
+
+            ready = true;
+          };
+
+          filereader.readAsArrayBuffer(current_file)
+
+          console.log("读取完毕，正在计算文件指纹。。。");
+
+          var spark = new SparkMD5()
+          spark.append(result)
+          var hexHash = spark.end()
+
+          console.log("文件指纹计算完毕，正在上传。。。");
+          var formData = new FormData();
+          formData.append("file", current_file)
+          formData.append("fileHash", hexHash)
+          formData.append("isDir", false)
+          formData.append("dirName", "emtpy")
+          formData.append("fileName", current_dirs[dirs_len - 1])
+
+          var upload_action = document.getElementById("upload_action");
+          upload_action.innerHTML = "正在上传：" + current_file.name + "，请等待。。。"
+          var xhr = new XMLHttpRequest()
+          xhr.open("POST", "/api/upload", false)
+          // xhr.upload.addEventListener('progress',function(e){
+          // 	var progressRate = (e.loaded / e.total) * 100 + '%'
+
+          // 	// $('.progress > div').css('width',progressRate);
+
+          // 	document.getElementById("uploaddir_progress").style.width = progressRate;
+          // })
+          xhr.send(formData)
+
+          var info = xhr.responseText
+          var obj = eval("(" + info + ")");
+          if (obj.StatusCode === 2000) {
+            upload_action.innerHTML = current_file.name + "，" + obj.errorMsg
+            console.log(current_file.name + "，上传成功！" + obj.errorMsg)
+          } else {
+            alert("文件：" + current_file.name + "，上传失败！终止动作！")
+            alert(obj.errorMsg)
+            changeWorkDir(origin_dir);
+            return
+          }
+          //还原最开始工作路径
+          // targetDir = origin_dir
+        }
+
+        alert("上传完毕！")
+
+        //location.reload()
+      },
+      error: function () {
+        alert("请求PWD错误！服务器异常！");
+      }
+    })
+  }
+
+  function stopUpLoadDir() {
+    stop = true;
+  }
+
+  function onGetInClick(dirname) {
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST", "/api/pwd", false);
+    xhr.send(null)
+
+    var info = xhr.responseText
+    var result = ""
+    if (info === "/") {
+      result = info + dirname;
+    } else {
+      result = info + "/" + dirname;
+    }
+
+    if (changeWorkDir(result)) {
+      location.reload()
+    } else {
+      alert("进入文件夹失败！")
+    }
+  }
+</script>
+
 </html>
