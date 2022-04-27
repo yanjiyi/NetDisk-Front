@@ -633,7 +633,29 @@
     return false;
   }
 
+  function SyncFileReader(file) {
+    let self = this;
+    let ready = false;
+    let result = '';
 
+    const sleep = function (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    self.readAsArrayBuffer = async function() {
+        while (ready === false) {
+          await sleep(100);
+        }
+        return result;
+    }    
+
+    const reader = new FileReader();
+    reader.onloadend = function(evt) {
+        result = evt.target.result;
+        ready = true;
+    };
+    reader.readAsArrayBuffer(file);
+  }
 
   function uploadDir() {
     // console.log(document.getElementById("upload_dir").files.length)
@@ -690,37 +712,18 @@
           // console.log(i)
 
           console.log("正在读取文件：" + current_file.name);
-          var filereader = new FileReader()
-          var ready = false
-          var result = ''
-
-          var check = function () {
-            if (ready === true) {
-              return;
-            }
-
-            setTimeout(check, 1000);
-          }
-
-          check()
-
-          filereader.onloadend = function (evt) {
-            result = evt.target.result
-
-            ready = true;
-          };
-
-          filereader.readAsArrayBuffer(current_file)
+          const fileReader = new SyncFileReader(current_file);
+          const arrayBuffer = await fileReader.readAsArrayBuffer();
 
           console.log("读取完毕，正在计算文件指纹。。。");
 
           var spark = new SparkMD5()
-          spark.append(result)
+          spark.append(arrayBuffer)
           var hexHash = spark.end()
 
           console.log("文件指纹计算完毕，正在上传。。。");
           var formData = new FormData();
-          formData.append("file", current_file)
+          formData.append("file", arrayBuffer)
           formData.append("fileHash", hexHash)
           formData.append("isDir", false)
           formData.append("dirName", "emtpy")
