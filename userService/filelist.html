@@ -720,7 +720,7 @@
           var spark = new SparkMD5()
           spark.append(arrayBuffer)
           var hexHash = spark.end()
-
+          console.log(hexHash)
           console.log("文件指纹计算完毕，正在上传。。。");
           var formData = new FormData();
           formData.append("file", document.getElementById("upload_dir").files[i])
