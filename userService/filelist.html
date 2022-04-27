@@ -349,7 +349,7 @@
           ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[
             cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" + (filelist_pages[cur_page][
             i
-          ].dirmask ? ("<td><button onclick='onGetInClick(\"" + filelist_pages[cur_page][i].userfilename +
+          ].dirmask ? ("<td><button onclick='onGetInClick(\"" + str(filelist_pages[cur_page][i].userfilename) +
             "\")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
         // tr.innerHTML = '<td>' + filelist_pages[cur_page][i].userfilename + '</td><td>' +
         // 	filelist_pages[cur_page][i].dirmask ? '文件夹' : '文件' + '</td><td>' + timestampToTime(
