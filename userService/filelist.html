@@ -341,8 +341,8 @@
           ")' class='btn btn-outline-secondary'>详细</button>" + "<button  onclick=onDeleteClick('" + data[i].id +
           "') class='btn btn-outline-danger'>删除</button></td>" + (data[
             i
-          ].dirmask ? ("<td><button onclick='onGetInClick(" + data[i].id +
-            ")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
+          ].dirmask ? ("<button onclick='onGetInClick(" + data[i].id +
+            ")' class='btn btn-outline-primary'>进入</button>") : "")
 
         tdArr.appendChild(tr);
       }
