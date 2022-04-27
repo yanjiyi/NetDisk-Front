@@ -108,7 +108,7 @@
             <button class="btn btn-outline-primary">转到路径...</button>
           </li>
           <li class="nav-item" style="padding-right: 30px;">
-            <button class="btn btn-outline-primary">返回</button>
+            <button class="btn btn-outline-primary" onclick="onRetClick()">返回</button>
           </li>
         </ul>
       </nav>
@@ -657,20 +657,6 @@
     reader.readAsBinaryString(file);
   }
 
-  async function GetMD5(file) {
-
-    console.log("正在读取文件：" + file.name);
-    const fileReader = new SyncFileReader(file);
-    const arrayBuffer = await fileReader.readAsBinaryString()
-
-
-    console.log("读取完毕，正在计算文件指纹。。。");
-
-    var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
-    console.log(hexHash)
-    console.log("文件指纹计算完毕，正在上传。。。");
-  }
-
   function uploadDir() {
     // console.log(document.getElementById("upload_dir").files.length)
     // var filelist = document.getElementById("upload_dir").files[0]
@@ -802,6 +788,30 @@
     } else {
       alert("进入文件夹失败！")
     }
+  }
+
+  function onRetClick()
+  {
+    var xhr = new XMLHttpRequest()
+    xhr.open("POST","/api/pwd",false);
+    xhr.send(null)
+
+    var dir = xhr.responseText
+
+    dir.substr(0,dir.lastIndexOf("/"))
+
+    if(dir === "")
+    {
+      dir = "/"
+    }
+
+    if(changeWorkDir(dir))
+    {
+      location.reload()
+    }else{
+      alert("返回失败！")
+    }
+
   }
 </script>
 
