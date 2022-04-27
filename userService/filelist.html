@@ -775,7 +775,7 @@
     xhr.open("POST", "/api/pwd", false);
     xhr.send(null)
 
-    var info = xhr.responseText
+    var pwd = xhr.responseText
     var result = ""
 
     xhr.open("POST","/api/queryService?id="+id,false)
@@ -784,10 +784,10 @@
     var info = xhr.responseText
     var obj = eval("(" + info + ")");
 
-    if (info === "/") {
-      result = info + obj.userfilename;
+    if (pwd === "/") {
+      result = pwd + obj.userfilename;
     } else {
-      result = info + "/" + obj.userfilename;
+      result = pwd + "/" + obj.userfilename;
     }
 
     if (changeWorkDir(result)) {
