@@ -724,7 +724,16 @@
           //Dir in pos
           // var hash = hashlist[i]
           // console.log(i)
-          var hexHash = GetMD5(current_file)
+          console.log("正在读取文件：" + current_file.name);
+          const fileReader = new SyncFileReader(current_file);
+          const arrayBuffer = await fileReader.readAsBinaryString()
+
+
+          console.log("读取完毕，正在计算文件指纹。。。");
+
+          var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
+          console.log(hexHash)
+          console.log("文件指纹计算完毕，正在上传。。。");
         
           var formData = new FormData();
           formData.append("file", current_file)
