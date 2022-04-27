@@ -657,7 +657,7 @@
     reader.readAsArrayBuffer(file);
   }
 
-  async function uploadDir() {
+  function uploadDir() {
     // console.log(document.getElementById("upload_dir").files.length)
     // var filelist = document.getElementById("upload_dir").files[0]
     // console.log(filelist.webkitRelativePath.split("/"))
@@ -666,7 +666,7 @@
     $.ajax({
       url: "/api/pwd",
       type: "POST",
-      success: function (data) {
+      success: async function (data) {
         var origin_dir = data;
 
         var filelist_len = document.getElementById("upload_dir").files.length
