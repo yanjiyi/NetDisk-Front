@@ -716,7 +716,8 @@
 
         alert("上传完毕！")
 
-        //location.reload()
+        changeWorkDir("/")
+        location.reload()
       },
       error: function () {
         alert("请求PWD错误！服务器异常！");
