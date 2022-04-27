@@ -113,7 +113,7 @@
         </ul>
       </nav>
 
-      <table class="table table-borderless table-hover" id="files_container">
+      <table class="table table-borderless table-hover table-responsive">
         <tr class="table-active">
           <td>文件名</td>
           <td>文件类型</td>
@@ -122,6 +122,9 @@
           <td>操作</td>
           <td></td>
         </tr>
+        <tbody id="files_container">
+
+        </tbody>
       </table>
       <div class="btn-group">
         <button class="btn btn-outline-primary" onclick="onfront()">
@@ -317,48 +320,22 @@
     type: "POST",
     url: "/api/listCur",
     success: function (data) {
-      var cur_step = 1;
-      var page = []
-      console.log("data Size : " + data.length)
-      for (var i = 0; i < data.length; i++) {
-        var file = data[i]
-        console.log("file : " + file)
-        if (cur_step <= (data.length < 10 ? data.length : 10)) {
-          page.push(file)
-
-          if (cur_step == (data.length < 10 ? data.length : 10)) {
-            console.log(page)
-            filelist_pages.push(page)
-            page = []
-          }
-
-          cur_step++
-        }
-      }
-
-      console.log(file)
 
       var tdArr = document.getElementById("files_container").firstElementChild
-      for (var i = 0; i < (data.length >= 10 ? 10 : data.length); i++) {
+      for (var i = 0; i < data.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
-        tr.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td>" + "<td>" + (filelist_pages[
-            cur_page][i].dirmask ? "文件夹" : "文件") + "</td>" + "<td>" + timestampToTime(filelist_pages[cur_page][i]
-            .uploaddate) + "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") +
-          "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
-          ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[
-            cur_page][i].id + ")' class='btn btn-outline-secondary'>详细</button>" + "<button  onclick=onDeleteClick('" + filelist_pages[cur_page][i].id + "') class='btn btn-outline-danger'>删除</button></td>" + (filelist_pages[cur_page][
+        tr.innerHTML = "<td>" + data[i].userfilename + "</td>" + "<td>" + (data[i].dirmask ? "文件夹" : "文件") +
+          "</td>" + "<td>" + timestampToTime(data[i]
+            .uploaddate) + "</td><td>" + (data[i].status ? "可用" : "不可用") +
+          "</td><td><button onclick='onDownloadClick(" + data[i].id +
+          ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + data[i].id +
+          ")' class='btn btn-outline-secondary'>详细</button>" + "<button  onclick=onDeleteClick('" + data[i].id +
+          "') class='btn btn-outline-danger'>删除</button></td>" + (data[
             i
-          ].dirmask ? ("<td><button onclick='onGetInClick(" + filelist_pages[cur_page][i].id +
+          ].dirmask ? ("<td><button onclick='onGetInClick(" + data[i].id +
             ")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
-        // tr.innerHTML = '<td>' + filelist_pages[cur_page][i].userfilename + '</td><td>' +
-        // 	filelist_pages[cur_page][i].dirmask ? '文件夹' : '文件' + '</td><td>' + timestampToTime(
-        // 		filelist_pages[cur_page][i].uploaddate) + '</td><td>' + filelist_pages[cur_page][i]
-        // 	.status ? '可用' : '不可用' + '</td><td><button onclick="onDownloadClick(' + filelist_pages[
-        // 		cur_page][i].id +
-        // 	')" class="btn btn-outline-primary">下载</button><button onclick="onDetialClick(' +
-        // 	filelist_pages[cur_page][i].id + ')" class="btn btn-outline-secondary">详细</button></td>' +
-        // 	filelist_pages[cur_page][i].dirmask ? '<td><button onclick="onGetInClick(' + filelist_pages[cur_page][i].id + ')" class="btn btn-outline-primary">进入</button></td>' : '';
+
         tdArr.appendChild(tr);
       }
 
@@ -386,31 +363,6 @@
       window.location.href = '../index.html'
     }
   })
-
-  function updateTable() {
-    var tab = document.getElementById("files_container");
-    var i = 0;
-    for (var cur_row = 0; cur_row < filelist_pages.length; cur_row++) {
-      var uRow = tab.rows[cur_row];
-      // uRow.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td><td>" + filelist_pages[cur_page][i]
-      // 	.dirmask ? "文件夹" : "文件" + "</td><td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) +
-      // 	"</td><td>" + filelist_pages[cur_page][i].status ? "可用" : "不可用" +
-      // 	"</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
-      // 	")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page]
-      // 	[i].id + ")' class='btn btn-outline-secondary'>详细</button></td>" +
-      // 		filelist_pages[cur_page][i].dirmask ? '<td><button onclick="onGetInClick(' + filelist_pages[cur_page][i].id + ')" class="btn btn-outline-primary">进入</button></td>' : '';
-      uRow.innerHTML = "<td>" + filelist_pages[cur_page][i].userfilename + "</td>" + "<td>" + (filelist_pages[cur_page][
-          i
-        ].dirmask ? "文件夹" : "文件") + "</td>" + "<td>" + timestampToTime(filelist_pages[cur_page][i].uploaddate) +
-        "</td><td>" + (filelist_pages[cur_page][i].status ? "可用" : "不可用") +
-        "</td><td><button onclick='onDownloadClick(" + filelist_pages[cur_page][i].id +
-        ")' class='btn btn-outline-primary'>下载</button><button onclick='onDetialClick(" + filelist_pages[cur_page][i]
-        .id + ")' class='btn btn-outline-secondary'>详细</button></td>" + "<button  onclick=onDeleteClick('" + filelist_pages[cur_page][i].id + "') class='btn btn-outline-danger'>删除</button></td>" + (filelist_pages[cur_page][i].dirmask ? (
-          "<td><button onclick='onGetInClick(" + filelist_pages[cur_page][i].id +
-          ")' class='btn btn-outline-primary'>进入</button></td>") : "<td></td>")
-      i++;
-    }
-  }
 
   function onfront() {
     if (filelist_pages.length === 0 || filelist_pages.length === 1)
@@ -720,7 +672,7 @@
           var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
           console.log(hexHash)
           console.log("文件指纹计算完毕，正在上传。。。");
-        
+
           var formData = new FormData();
           formData.append("file", current_file)
           formData.append("fileHash", hexHash)
@@ -778,7 +730,7 @@
     var pwd = xhr.responseText
     var result = ""
 
-    xhr.open("POST","/api/queryService?id="+id,false)
+    xhr.open("POST", "/api/queryService?id=" + id, false)
     xhr.send(null)
 
     var info = xhr.responseText
@@ -797,38 +749,34 @@
     }
   }
 
-  function onRetClick()
-  {
+  function onRetClick() {
     var xhr = new XMLHttpRequest()
-    xhr.open("POST","/api/pwd",false);
+    xhr.open("POST", "/api/pwd", false);
     xhr.send(null)
 
     var dir = xhr.responseText
 
-    console.log("之前目录："+dir)
+    console.log("之前目录：" + dir)
 
-    dir = dir.substr(0,dir.lastIndexOf("/"))
+    dir = dir.substr(0, dir.lastIndexOf("/"))
 
-    if(dir === "")
-    {
+    if (dir === "") {
       dir = "/"
     }
 
-    console.log("计算结果："+dir)
+    console.log("计算结果：" + dir)
 
-    if(changeWorkDir(dir))
-    {
+    if (changeWorkDir(dir)) {
       location.reload()
-    }else{
+    } else {
       alert("返回失败！")
     }
 
   }
 
-  function onDeleteClick(id)
-  {
+  function onDeleteClick(id) {
     var xhr = new XMLHttpRequest()
-    xhr.open("POST","/api/deleteService?id="+id,false)
+    xhr.open("POST", "/api/deleteService?id=" + id, false)
     xhr.send(null)
 
     location.reload()
