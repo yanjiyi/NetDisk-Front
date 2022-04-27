@@ -127,14 +127,30 @@
             <button class="btn btn-outline-primary">转到路径...</button>
           </li>
           <li class="nav-item" style="padding-right: 30px;">
-            <button class="btn btn-outline-primary" onclick="onRetClick()">返回</button>
+            <a class="text-primary" href="#" onclick="onRetClick()">返回</a>
           </li>
           
         </ul>
       </nav>
-
+      <select class="form-select" aria-label="显示数目：">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option selected value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
       <table id="fileTable" class="table table-borderless table-hover table-responsive">
         <tr class="table-active">
+          <td>序号</td>
           <td>文件名</td>
           <td>文件类型</td>
           <td>上传日期</td>
@@ -361,7 +377,7 @@
       for (var i = 0; i < data.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
-        tr.innerHTML = "<td>" + data[i].userfilename + "</td>" + "<td>" + (data[i].dirmask ? "文件夹" : "文件") +
+        tr.innerHTML = "<td>" + (i+1) + "</td>" + "<td>" + data[i].userfilename + "</td>" + "<td>" + (data[i].dirmask ? "文件夹" : "文件") +
           "</td>" + "<td>" + timestampToTime(data[i]
             .uploaddate) + "</td><td>" + (data[i].status ? "可用" : "不可用") +
           "</td><td><button onclick='onDownloadClick(" + data[i].id +
