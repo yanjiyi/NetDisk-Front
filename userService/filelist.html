@@ -126,11 +126,6 @@
 
         </tbody>
       </table>
-      <div class="btn-group">
-        <button class="btn btn-outline-primary" onclick="onfront()">
-          <</button> <button class="btn btn-outline-primary" onclick="onback()">>
-        </button>
-      </div>
     </div>
   </div>
 
@@ -311,11 +306,6 @@
     keyboard: false
   })
 
-
-  var filelist_pages = []
-  var spilt_size = 10
-  var cur_page = 0;
-
   $.ajax({
     type: "POST",
     url: "/api/listCur",
@@ -363,30 +353,6 @@
       window.location.href = '../index.html'
     }
   })
-
-  function onfront() {
-    if (filelist_pages.length === 0 || filelist_pages.length === 1)
-      return;
-
-    cur_page--;
-    if (cur_page < 0) {
-      cur_page = filelist_pages.length - 1
-    }
-
-    updateTable()
-  }
-
-  function onback() {
-    if (filelist_pages.length === 0 || filelist_pages.length === 1)
-      return;
-
-    cur_page++;
-    if (cur_page >= filelist_pages.length - 1) {
-      cur_page = 0;
-    }
-
-    updateTable()
-  }
 
   function onDownloadClick(id) {
     // $.ajax({
