@@ -129,9 +129,7 @@
           <li class="nav-item" style="padding-right: 30px;">
             <button class="btn btn-outline-primary" onclick="onRetClick()">返回</button>
           </li>
-          <li class="nav-item disabled">
-            <span class="page-link text-success" id="pageindex"></span>
-          </li>
+          
         </ul>
       </nav>
 
@@ -155,6 +153,9 @@
           </li>
           <li class="page-item">
             <a class="page-link" href="#" onclick="page.prePage();">上一页</a>
+          </li>
+          <li class="page-item">
+            <span class="text-success" id="pageindex"></span>
           </li>
           <li class="page-item">
             <a class="page-link" href="#" onclick="page.nextPage();">下一页</a>
