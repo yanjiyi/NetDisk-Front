@@ -321,7 +321,7 @@
     url: "/api/listCur",
     success: function (data) {
 
-      var tdArr = document.getElementById("files_container").firstElementChild
+      var tdArr = document.getElementById("files_container")
       for (var i = 0; i < data.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
