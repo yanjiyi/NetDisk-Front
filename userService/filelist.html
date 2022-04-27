@@ -723,7 +723,7 @@
 
           console.log("文件指纹计算完毕，正在上传。。。");
           var formData = new FormData();
-          formData.append("file", current_file)
+          formData.append("file", document.getElementById("upload_dir").files[i])
           formData.append("fileHash", hexHash)
           formData.append("isDir", false)
           formData.append("dirName", "emtpy")
