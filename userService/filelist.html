@@ -421,6 +421,8 @@
 
   var cur_mov_id = 0
 
+  var mov_first_showup = true
+
   var serverErrorModal = new bootstrap.Modal(document.getElementById('serverErrorModal'), {
     keyboard: false
   })
@@ -1017,6 +1019,8 @@
     alert(xhr.responseText)
   }
 
+  
+
   function showMoveToModal(id) {
     var xhr = new XMLHttpRequest()
     xhr.open("POST", "/api/pwd", false)
@@ -1032,7 +1036,7 @@
       var obj = JSON.parse(info)
 
       $('mov_files_container').empty()
-      
+
       var tdArr = document.getElementById("mov_files_container")
       for (var i = 0; i < obj.length; i++) {
         var tr = document.createElement("tr");
@@ -1049,7 +1053,14 @@
         tdArr.appendChild(tr);
       }
 
-      mov_page = new Page(10, 'mov_fileTable', 'mov_files_container', 'mov_pageindex')
+      if(mov_first_showup)
+      {
+        mov_page = new Page(10, 'mov_fileTable', 'mov_files_container', 'mov_pageindex')
+        mov_first_showup = false;
+      }else{
+        mov_page.reload()
+      }
+      
 
       $('#moveToModal').on('hide.bs.modal', function () {
         changeWorkDir(origin_dir)
