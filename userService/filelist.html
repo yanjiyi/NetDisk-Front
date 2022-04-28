@@ -853,7 +853,7 @@
       obj = JSON.parse(info)
 
       var tdArr = document.getElementById("mov_files_container")
-
+      tdArr.innerHTML = ""
       for (var i = 0; i < obj.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
@@ -867,8 +867,6 @@
             ("<button class='btn btn-outline-danger disabled'>移动到这</button></td>"))
 
         tdArr.appendChild(tr);
-
-        mov_page = new Page(10, 'mov_fileTable', 'mov_files_container', 'mov_pageindex')
       }
     } else {
       alert("进入文件夹失败！")
