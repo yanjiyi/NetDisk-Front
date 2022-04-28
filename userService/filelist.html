@@ -852,8 +852,9 @@
       info = xhr.responseText
       obj = JSON.parse(info)
 
+      $('#mov_files_container').empty()
+
       var tdArr = document.getElementById("mov_files_container")
-      tdArr.innerHTML = ""
       for (var i = 0; i < obj.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
@@ -868,6 +869,8 @@
 
         tdArr.appendChild(tr);
       }
+
+      mov_page.reload()
     } else {
       alert("进入文件夹失败！")
     }

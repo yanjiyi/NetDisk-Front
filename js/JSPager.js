@@ -42,6 +42,29 @@ Page.prototype.__init__ = function () {
 
   this.__updateTableRows__();
 };
+
+Page.prototype.reload = function(){
+  this.rowCount = 0; //记录数
+  this.pageCount = 0; //页数
+  this.pageIndex = 0; //页索引
+  this.__oTable__ = null; //表格引用
+  this.__oTBody__ = null; //要分页内容
+  this.__dataRows__ = 0; //记录行引用
+  this.__oldTBody__ = null;
+  
+  this.__oTable__ = document.getElementById(this.tableId); //获取table引用
+  this.__oTBody__ = this.__oTable__.tBodies[this.tBodyId]; //获取tBody引用
+  this.__pageInnerDiv__ = document.getElementById(this.pageId);
+  this.__dataRows__ = this.__oTBody__.rows;
+  this.rowCount = this.__dataRows__.length;
+  try {
+      this.absolute = (this.absolute <= 0) || (this.absolute > this.rowCount) ? this.rowCount : this.absolute;
+      this.pageCount = parseInt(this.rowCount % this.absolute == 0
+? this.rowCount / this.absolute : this.rowCount / this.absolute + 1);
+  } catch (exception) { }
+
+  this.__updateTableRows__();
+}
 /*
 下一页
 */
