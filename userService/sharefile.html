@@ -181,6 +181,25 @@
 
             </tr>
           </table>
+          <nav>
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="#" onclick="page.firstPage();">首页</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" onclick="page.prePage();">上一页</a>
+              </li>
+              <li class="page-item">
+                <span class="page-link" id="pageindex"></span>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" onclick="page.nextPage();">下一页</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" onclick="page.lastPage();">尾页</a>
+              </li>
+            </ul>
+          </nav>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
@@ -190,6 +209,8 @@
   </div>
 
   <script type="text/javascript">
+    var page = null
+    
     var serverErrorModal = new bootstrap.Modal(document.getElementById('serverErrorModal'), {
       keyboard: false
     })
