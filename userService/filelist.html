@@ -917,7 +917,7 @@
       var seXhr = new XMLHttpRequest()
       seXhr.open("POST", "/api/listCur", false)
       var info = seXhr.responseText
-      var obj = eval("("+info+")")
+      var obj = JSON.parse(info)
 
       var tdArr = document.getElementById("mov_files_container")
       for (var i = 0; i < obj.length; i++) {
