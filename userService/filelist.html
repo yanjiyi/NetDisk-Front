@@ -916,6 +916,7 @@
     if (changeWorkDir("/")) {
       var seXhr = new XMLHttpRequest()
       seXhr.open("POST", "/api/listCur", false)
+      seXhr.send(null)
       var info = seXhr.responseText
       console.log(info)
       var obj = JSON.parse(info)
