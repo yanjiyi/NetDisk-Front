@@ -419,6 +419,8 @@
   var page = null
   var mov_page = null
 
+  var cur_mov_id = 0
+
   var serverErrorModal = new bootstrap.Modal(document.getElementById('serverErrorModal'), {
     keyboard: false
   })
@@ -867,7 +869,7 @@
           "</td>" + "<td>" + timestampToTime(obj[i]
             .uploaddate) + "</td><td>" + (obj[i].status ? "可用</td><td>":"不可用</td><td>") + (obj[i].dirmask ? ("<button onclick='onMoveGetInClick(" + obj[i].id +
             ")' class='btn btn-outline-primary'>进入</button></td><td>") :
-            ("")) + (obj[i].dirmask ? ("<button onclick='moveTo(" + id + "," + obj[i].id +
+            ("")) + (obj[i].dirmask ? ("<button onclick='moveTo(" + cur_mov_id + "," + obj[i].id +
             ")' class='btn btn-outline-primary'>移动到这</button></td>") :
             ("<button class='btn btn-outline-danger' disabled>移动到这</button></td>"))
 
@@ -924,6 +926,8 @@
 
         tdArr.appendChild(tr);
       }
+
+      cur_mov_id = id
 
       mov_page.reload()
     } else {
@@ -1048,6 +1052,8 @@
       $('#moveToModal').on('hide.bs.modal', function () {
         changeWorkDir(origin_dir)
       })
+
+      cur_mov_id = id
 
       moveToModal.show()
     } else {
