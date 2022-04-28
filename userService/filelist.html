@@ -370,6 +370,9 @@
           <nav nav class="navbar navbar-light">
             <ul class="nav nav-pills">
               <li class="nav-item" style="padding-right: 30px;">
+                <button class="btn btn-outline-primary" onclick="onMoveToRootClick()">移动到Root</button>
+              </li>
+              <li class="nav-item" style="padding-right: 30px;">
                 <button class="btn btn-outline-primary" onclick="onMoveRetClick()">返回</button>
               </li>
             </ul>
@@ -836,6 +839,11 @@
     stop = true;
   }
 
+  function onMoveToRootClick()
+  {
+    
+  }
+
   function onMoveRetClick(){
     var xhr = new XMLHttpRequest()
     xhr.open("POST", "/api/pwd", false);
@@ -1017,9 +1025,9 @@
     xhr.send(null)
 
     alert(xhr.responseText)
-  }
 
-  
+    location.reload()
+  }
 
   function showMoveToModal(id) {
     var xhr = new XMLHttpRequest()
