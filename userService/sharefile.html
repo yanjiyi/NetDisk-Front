@@ -108,8 +108,9 @@
     </div>
     <div id="mainDlg" class="text-center bg-gradient tab-content">
       <!-- 					<h2 style="">Title</h2> -->
-      <table class="table table-borderless table-hover table-striped table-responsive" id="files_container">
+      <table id="fileTable" class="table table-borderless table-hover table-responsive">
         <tr class="table-active">
+          <td>序号</td>
           <td>文件名</td>
           <td>文件类型</td>
           <td>上传日期</td>
@@ -117,6 +118,9 @@
           <td>操作</td>
           <td></td>
         </tr>
+        <tbody id="files_container">
+
+        </tbody>
       </table>
     </div>
   </div>
