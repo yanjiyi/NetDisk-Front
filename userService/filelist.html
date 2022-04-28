@@ -124,7 +124,7 @@
             <button class="btn btn-outline-primary" onclick="showCreateDirModal()">创建文件夹</button>
           </li>
           <li class="nav-item" style="padding-right: 30px;">
-            <button class="btn btn-outline-primary">转到路径...</button>
+            <button class="btn btn-outline-primary" onclick="showGoDirModal()">转到路径...</button>
           </li>
           <li class="nav-item" style="padding-right: 30px;">
             <button class="btn btn-outline-primary" onclick="onRetClick()">返回</button>
@@ -402,6 +402,29 @@
       </div>
     </div>
   </div>
+  <div class="modal fade text-center" id="goDirModal" tabindex="-1" aria-labelledby="goDirModal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="goDirModal">转到路径</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered table-hover">
+            <tr>
+              <td>路径：</td>
+              <td><input type="text" value="/" id="goDirName" /></td>
+              <td><button class="btn btn-primary" onclick="onGoDirClick()">跳转</button></td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script type="text/javascript">
   var page = null
@@ -424,6 +447,10 @@
   })
 
   var moveToModal = new bootstrap.Modal(document.getElementById('moveToModal'), {
+    keyboard: false
+  })
+
+  var goDirModal = new bootstrap.Modal(document.getElementById('goDirModal'), {
     keyboard: false
   })
 
@@ -1081,6 +1108,22 @@
     } else {
       alert("切换工作路径失败！")
     }
+  }
+
+  function onGoDirClick()
+  {
+    if(changeWorkDir($('#goDirModal').value))
+    {
+      location.reload()
+    }else{
+      alert("跳转失败！")
+    }
+
+  }
+
+  function showGoDirModal()
+  {
+    goDirModal.show()
   }
 </script>
 
