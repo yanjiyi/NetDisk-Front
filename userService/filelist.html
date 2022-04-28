@@ -368,6 +368,10 @@
     keyboard: false
   })
 
+  var createDirModal = new bootstrap.Modal(document.getElementById('createDirModal'), {
+    keyboard: false
+  })
+
   $.ajax({
     type: "POST",
     url: "/api/listCur",
@@ -830,6 +834,11 @@
       alert("操作成功！");
       location.reload()
     }
+  }
+
+  function showCreateDirModal()
+  {
+    createDirModal.show()
   }
 </script>
 
