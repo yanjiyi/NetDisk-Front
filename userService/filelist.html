@@ -816,6 +816,12 @@
           }
           //还原最开始工作路径
           // targetDir = origin_dir
+
+          if(stop)
+          {
+            stop = false;
+            break;
+          }
         }
 
         $('#dirAni').css('visibility','hidden')
