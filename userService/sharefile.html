@@ -415,6 +415,15 @@
 
     }
 
+    function onGoDirClick() {
+      if (changeWorkDir(document.getElementById('goDirName').value)) {
+        location.reload()
+      } else {
+        alert("跳转失败！")
+      }
+
+    }
+
     function showGoDirModal() {
       goDirModal.show()
     }
