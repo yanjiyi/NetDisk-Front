@@ -1031,6 +1031,8 @@
       var info = seXhr.responseText
       var obj = JSON.parse(info)
 
+      $('mov_files_container').empty()
+      
       var tdArr = document.getElementById("mov_files_container")
       for (var i = 0; i < obj.length; i++) {
         var tr = document.createElement("tr");
