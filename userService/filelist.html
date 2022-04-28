@@ -599,7 +599,7 @@
 
   function createDir(dirname) {
     var formData = new FormData()
-    formData.append("file", document.getElementById("upload_dir").files[0])
+    formData.append("file", new Blob(["Unusable"]))
     formData.append("fileHash", 0)
     formData.append("isDir", true)
     formData.append("dirName", dirname)
@@ -833,6 +833,8 @@
     {
       alert("操作成功！");
       location.reload()
+    }else{
+      alert("创建失败！")
     }
   }
 
