@@ -914,8 +914,9 @@
     var origin_dir = xhr.responseText
 
     if (changeWorkDir("/")) {
-      xhr.open("POST", "/api/listCur", false)
-      var info = xhr.responseText
+      var seXhr = new XMLHttpRequest()
+      seXhr.open("POST", "/api/listCur", false)
+      var info = seXhr.responseText
       var obj = eval("("+info+")")
 
       var tdArr = document.getElementById("mov_files_container")
