@@ -59,101 +59,6 @@
     .modal-open .modal {
       z-index: 1100 !important;
     }
-
-    .lds-spinner {
-      color: official;
-      display: inline-block;
-      position: relative;
-      width: 80px;
-      height: 80px;
-    }
-
-    .lds-spinner div {
-      transform-origin: 40px 40px;
-      animation: lds-spinner 1.2s linear infinite;
-    }
-
-    .lds-spinner div:after {
-      content: " ";
-      display: block;
-      position: absolute;
-      top: 3px;
-      left: 37px;
-      width: 6px;
-      height: 18px;
-      border-radius: 20%;
-      background: #fdd;
-    }
-
-    .lds-spinner div:nth-child(1) {
-      transform: rotate(0deg);
-      animation-delay: -1.1s;
-    }
-
-    .lds-spinner div:nth-child(2) {
-      transform: rotate(30deg);
-      animation-delay: -1s;
-    }
-
-    .lds-spinner div:nth-child(3) {
-      transform: rotate(60deg);
-      animation-delay: -0.9s;
-    }
-
-    .lds-spinner div:nth-child(4) {
-      transform: rotate(90deg);
-      animation-delay: -0.8s;
-    }
-
-    .lds-spinner div:nth-child(5) {
-      transform: rotate(120deg);
-      animation-delay: -0.7s;
-    }
-
-    .lds-spinner div:nth-child(6) {
-      transform: rotate(150deg);
-      animation-delay: -0.6s;
-    }
-
-    .lds-spinner div:nth-child(7) {
-      transform: rotate(180deg);
-      animation-delay: -0.5s;
-    }
-
-    .lds-spinner div:nth-child(8) {
-      transform: rotate(210deg);
-      animation-delay: -0.4s;
-    }
-
-    .lds-spinner div:nth-child(9) {
-      transform: rotate(240deg);
-      animation-delay: -0.3s;
-    }
-
-    .lds-spinner div:nth-child(10) {
-      transform: rotate(270deg);
-      animation-delay: -0.2s;
-    }
-
-    .lds-spinner div:nth-child(11) {
-      transform: rotate(300deg);
-      animation-delay: -0.1s;
-    }
-
-    .lds-spinner div:nth-child(12) {
-      transform: rotate(330deg);
-      animation-delay: 0s;
-    }
-
-    @keyframes lds-spinner {
-      0% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 
@@ -400,19 +305,8 @@
                   <td><span id="uploadDirAction"></span></td>
                 </tr>
                 <tr>
-                  <div class="lds-spinner" style="visibility: hidden;" id="dirAni">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                  <div class="spinner-border text-info" role="status" style="visibility: hidden;" id="dirAni">
+                    <span class="visually-hidden">Loading...</span>
                   </div>
                 </tr>
               </table>
@@ -872,7 +766,7 @@
           var action = document.getElementById("uploadDirAction")
 
           console.log("正在读取文件：" + current_file.name);
-          log_dir.innerHTML += "正在读取文件：" + current_file.name + "\n"
+          log_dir.innerHTML += "正在读取文件：" + current_file.name + "&lt;br&gt;"
           action.innerHTML = "正在读取文件：" + current_file.name
 
           const fileReader = new SyncFileReader(current_file);
@@ -880,13 +774,13 @@
 
 
           console.log("读取完毕，正在计算文件指纹。。。");
-          log_dir.innerHTML += "读取完毕，正在计算文件指纹。。。" + "\n"
+          log_dir.innerHTML += "读取完毕，正在计算文件指纹。。。" + "&lt;br&gt;"
           action.innerHTML = "读取完毕，正在计算文件指纹。。。"
           var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
 
           console.log(hexHash)
           console.log("文件指纹计算完毕，正在上传。。。");
-          log_dir.innerHTML += "文件指纹计算完毕，正在上传。。。" + "\n"
+          log_dir.innerHTML += "文件指纹计算完毕，正在上传。。。" + "&lt;br&gt;"
           action.innerHTML = "文件指纹计算完毕，正在上传。。。"
 
           var formData = new FormData();
@@ -911,7 +805,7 @@
           var obj = eval("(" + info + ")");
           if (obj.StatusCode === 2000) {
             console.log(current_file.name + "，上传成功！" + obj.errorMsg)
-            log_dir.innerHTML += current_file.name + "，上传成功！" + obj.errorMsg + "\n"
+            log_dir.innerHTML += current_file.name + "，上传成功！" + obj.errorMsg + "&lt;br&gt;"
             action.innerHTML = current_file.name + "，上传成功！" + obj.errorMsg
           } else {
             alert("文件：" + current_file.name + "，上传失败！终止动作！")
