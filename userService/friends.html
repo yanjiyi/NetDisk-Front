@@ -84,7 +84,13 @@
 			</div>
 			
 			<div id="mainDlg" class="text-center bg-gradient tab-content">
-				<!-- 					<h2 style="">Title</h2> -->
+				<nav nav class="navbar navbar-light">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <button onclick="login()" class="btn btn-outline-primary">添加好友</button>
+            </linav-item>
+          </ul>
+        </nav>
 				<table class="table table-borderless table-hover table-striped table-responsive" id="friends_container">
 					<tr class="table-active">
 						<td>好友ID</td>
@@ -92,8 +98,7 @@
 						<td>添加日期</td>
 						<td>操作</td>
 					</tr>
-					<input type="button" value="添加好友" id="login" onclick="login()"
-						class="btn btn-outline-primary" style="width: 100%;" />
+					
 				</table>
 			</div>
 		</div>
