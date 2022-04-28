@@ -916,7 +916,7 @@
     if (changeWorkDir("/")) {
       xhr.open("POST", "/api/listCur", false)
       var info = xhr.responseText
-      // var obj = eval("(" + info + ")");
+      var obj = eval("("+info+")")
 
       var tdArr = document.getElementById("mov_files_container")
       for (var i = 0; i < obj.length; i++) {
