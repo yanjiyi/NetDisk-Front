@@ -872,7 +872,7 @@
           var action = document.getElementById("uploadDirAction")
 
           console.log("正在读取文件：" + current_file.name);
-          log_dir.innerHTML += "正在读取文件：" + current_file.name
+          log_dir.innerHTML += "正在读取文件：" + current_file.name + "\n"
           action.innerHTML = "正在读取文件：" + current_file.name
 
           const fileReader = new SyncFileReader(current_file);
@@ -880,13 +880,13 @@
 
 
           console.log("读取完毕，正在计算文件指纹。。。");
-          log_dir.innerHTML += "读取完毕，正在计算文件指纹。。。"
+          log_dir.innerHTML += "读取完毕，正在计算文件指纹。。。" + "\n"
           action.innerHTML = "读取完毕，正在计算文件指纹。。。"
           var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
 
           console.log(hexHash)
           console.log("文件指纹计算完毕，正在上传。。。");
-          log_dir.innerHTML += "文件指纹计算完毕，正在上传。。。"
+          log_dir.innerHTML += "文件指纹计算完毕，正在上传。。。" + "\n"
           action.innerHTML = "文件指纹计算完毕，正在上传。。。"
 
           var formData = new FormData();
@@ -911,7 +911,7 @@
           var obj = eval("(" + info + ")");
           if (obj.StatusCode === 2000) {
             console.log(current_file.name + "，上传成功！" + obj.errorMsg)
-            log_dir.innerHTML += current_file.name + "，上传成功！" + obj.errorMsg
+            log_dir.innerHTML += current_file.name + "，上传成功！" + obj.errorMsg + "\n"
             action.innerHTML = current_file.name + "，上传成功！" + obj.errorMsg
           } else {
             alert("文件：" + current_file.name + "，上传失败！终止动作！")
