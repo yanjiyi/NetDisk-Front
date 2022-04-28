@@ -107,7 +107,16 @@
       </ul>
     </div>
     <div id="mainDlg" class="text-center bg-gradient tab-content">
-      <!-- 					<h2 style="">Title</h2> -->
+      <nav nav class="navbar navbar-light">
+        <ul class="nav nav-pills">
+          <li class="nav-item" style="padding-right: 30px;">
+            <button class="btn btn-outline-primary" onclick="showGoDirModal()">转到路径...</button>
+          </li>
+          <li class="nav-item" style="padding-right: 30px;">
+            <button class="btn btn-outline-primary" onclick="onRetClick()">返回</button>
+          </li>
+        </ul>
+      </nav>
       <table id="fileTable" class="table table-borderless table-hover table-responsive">
         <tr class="table-active">
           <td>序号</td>
@@ -208,6 +217,29 @@
     </div>
   </div>
 
+  <div class="modal fade text-center" id="goDirModal" tabindex="-1" aria-labelledby="goDirModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="goDirModal">转到路径</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered table-hover">
+            <tr>
+              <td>路径：</td>
+              <td><input type="text" value="/" id="goDirName" /></td>
+              <td><button class="btn btn-primary" onclick="onGoDirClick()">跳转</button></td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript">
     var page = null
 
@@ -216,6 +248,10 @@
     })
 
     var detialModal = new bootstrap.Modal(document.getElementById('detialModal'), {
+      keyboard: false
+    })
+
+    var goDirModal = new bootstrap.Modal(document.getElementById('goDirModal'), {
       keyboard: false
     })
 
@@ -352,6 +388,35 @@
       } else {
         alert("进入文件夹失败！")
       }
+    }
+
+    function onRetClick() {
+      var xhr = new XMLHttpRequest()
+      xhr.open("POST", "/api/pwd", false);
+      xhr.send(null)
+
+      var dir = xhr.responseText
+
+      console.log("之前目录：" + dir)
+
+      dir = dir.substr(0, dir.lastIndexOf("/"))
+
+      if (dir === "") {
+        dir = "/"
+      }
+
+      console.log("计算结果：" + dir)
+
+      if (changeWorkDir(dir)) {
+        location.reload()
+      } else {
+        alert("返回失败！")
+      }
+
+    }
+
+    function showGoDirModal() {
+      goDirModal.show()
     }
   </script>
 </body>
