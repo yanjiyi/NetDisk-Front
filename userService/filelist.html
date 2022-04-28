@@ -692,10 +692,6 @@
     }
 
     const reader = new FileReader();
-    reader.onprogress = function (evt) {
-      var progressRate = (evt.loaded / evt.total) * 100 + '%'
-      document.getElementById("filehashdir_progress").style.width = progressRate;
-    }
     reader.onloadend = function (evt) {
       result = evt.target.result;
       ready = true;
