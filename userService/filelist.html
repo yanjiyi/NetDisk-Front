@@ -129,7 +129,7 @@
           <li class="nav-item" style="padding-right: 30px;">
             <button class="btn btn-outline-primary" onclick="onRetClick()">返回</button>
           </li>
-          
+
         </ul>
       </nav>
       <table id="fileTable" class="table table-borderless table-hover table-responsive">
@@ -168,7 +168,8 @@
     </div>
   </div>
 
-  <div class="modal fade text-center" id="serverErrorModal" tabindex="-1" aria-labelledby="serverErrorModal" aria-hidden="true">
+  <div class="modal fade text-center" id="serverErrorModal" tabindex="-1" aria-labelledby="serverErrorModal"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -335,7 +336,8 @@
     </div>
   </div>
 
-  <div class="modal fade text-center" id="createDirModal" tabindex="-1" aria-labelledby="createDirModal" aria-hidden="true">
+  <div class="modal fade text-center" id="createDirModal" tabindex="-1" aria-labelledby="createDirModal"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -346,8 +348,8 @@
           <table class="table table-bordered table-hover">
             <tr>
               <td>文件夹名：</td>
-              <td><input type="text" id="dirName"/></td>
-              <td><button class="btn btn-primary" onclick="onCreateDirClick()" >创建</button></td>
+              <td><input type="text" id="dirName" /></td>
+              <td><button class="btn btn-primary" onclick="onCreateDirClick()">创建</button></td>
             </tr>
           </table>
         </div>
@@ -375,7 +377,7 @@
               <td>操作</td>
             </tr>
             <tbody id="mov_files_container">
-    
+
             </tbody>
           </table>
           <nav>
@@ -434,7 +436,8 @@
       for (var i = 0; i < data.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
-        tr.innerHTML = "<td>" + (i+1) + "</td>" + "<td>" + data[i].userfilename + "</td>" + "<td>" + (data[i].dirmask ? "文件夹" : "文件") +
+        tr.innerHTML = "<td>" + (i + 1) + "</td>" + "<td>" + data[i].userfilename + "</td>" + "<td>" + (data[i]
+            .dirmask ? "文件夹" : "文件") +
           "</td>" + "<td>" + timestampToTime(data[i]
             .uploaddate) + "</td><td>" + (data[i].status ? "可用" : "不可用") +
           "</td><td><button onclick='onDownloadClick(" + data[i].id +
@@ -443,12 +446,14 @@
           "') class='btn btn-outline-danger'>删除</button></td>" + (data[
             i
           ].dirmask ? ("<td><button onclick='onGetInClick(" + data[i].id +
-            ")' class='btn btn-outline-primary'>进入</button>") : "<td>") + "<button class='btn btn-outline-primary' onclick='showMoveToModal(" + data[i].id + ")'>移动到...</button></td>"   
+            ")' class='btn btn-outline-primary'>进入</button>") : "<td>") +
+          "<button class='btn btn-outline-primary' onclick='showMoveToModal(" + data[i].id +
+          ")'>移动到...</button></td>"
 
         tdArr.appendChild(tr);
       }
 
-      page = new Page(5,'fileTable','files_container','pageindex')
+      page = new Page(5, 'fileTable', 'files_container', 'pageindex')
     },
     error: function () {
       serverErrorModal.show()
@@ -687,7 +692,7 @@
     }
 
     const reader = new FileReader();
-    reader.onprogress = function(evt){
+    reader.onprogress = function (evt) {
       var progressRate = (evt.loaded / evt.total) * 100 + '%'
       document.getElementById("filehashdir_progress").style.width = progressRate;
     }
@@ -764,7 +769,7 @@
           log_dir.innerHTML = "读取完毕，正在计算文件指纹。。。"
 
           var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
-          
+
           console.log(hexHash)
           console.log("文件指纹计算完毕，正在上传。。。");
           log_dir.innerHTML = "文件指纹计算完毕，正在上传。。。"
@@ -879,66 +884,62 @@
     location.reload()
   }
 
-  function onCreateDirClick()
-  {
+  function onCreateDirClick() {
     var dirName = document.getElementById("dirName").value
-    if(createDir(dirName))
-    {
+    if (createDir(dirName)) {
       alert("操作成功！");
       location.reload()
-    }else{
+    } else {
       alert("创建失败！")
     }
   }
 
-  function showCreateDirModal()
-  {
+  function showCreateDirModal() {
     createDirModal.show()
   }
 
-  function moveTo(id,target_id)
-  {
+  function moveTo(id, target_id) {
     var xhr = new XMLHttpRequest()
-    xhr.open("POST","/api/moveTo?target="+id+"&where="+target_id,false)
+    xhr.open("POST", "/api/moveTo?target=" + id + "&where=" + target_id, false)
     xhr.send(null)
 
     alert(xhr.responseText)
   }
 
-  function showMoveToModal(id)
-  {
+  function showMoveToModal(id) {
     var xhr = new XMLHttpRequest()
-    xhr.open("POST","/api/pwd",false)
+    xhr.open("POST", "/api/pwd", false)
     xhr.send(null)
 
     var origin_dir = xhr.responseText
 
-    if(changeWorkDir("/"))
-    {
-      xhr.open("POST","/api/listCur",false)
+    if (changeWorkDir("/")) {
+      xhr.open("POST", "/api/listCur", false)
       var info = xhr.responseText
       var obj = eval("(" + info + ")");
 
       var tdArr = document.getElementById("mov_files_container")
-      for (var i = 0; i < obj.length; i++)
-      {
+      for (var i = 0; i < obj.length; i++) {
         var tr = document.createElement("tr");
         tr.style.lineHeight = '38px';
-        tr.innerHTML = "<td>" + (i+1) + "</td>" + "<td>" + obj[i].userfilename + "</td>" + "<td>" + (obj[i].dirmask ? "文件夹" : "文件") +
+        tr.innerHTML = "<td>" + (i + 1) + "</td>" + "<td>" + obj[i].userfilename + "</td>" + "<td>" + (obj[i].dirmask ?
+            "文件夹" : "文件") +
           "</td>" + "<td>" + timestampToTime(obj[i]
-            .uploaddate) + "</td><td>" + (obj[i].status ? "</td><td><button onclick='moveTo(" + id + "," +obj[i].id + ")' class='btn btn-outline-primary'>移动到这</button></td>" : "</td><td><button class='btn btn-outline-danger disabled'>移动到这</button></td>")
-        
-            tdArr.appendChild(tr);
+            .uploaddate) + "</td><td>" + (obj[i].dirmask ? ("</td><td><button onclick='moveTo(" + id + "," + obj[i].id +
+            ")' class='btn btn-outline-primary'>移动到这</button></td>") :
+            ("</td><td><button class='btn btn-outline-danger disabled'>移动到这</button></td>"))
+
+        tdArr.appendChild(tr);
       }
 
-      mov_page = new Page(10,'mov_fileTable','mov_files_container','mov_pageindex')
+      mov_page = new Page(10, 'mov_fileTable', 'mov_files_container', 'mov_pageindex')
 
-      $('#moveToModal').on('hide.bs.modal',function(){
+      $('#moveToModal').on('hide.bs.modal', function () {
         changeWorkDir(origin_dir)
       })
 
       moveToModal.show()
-    }else{
+    } else {
       alert("切换工作路径失败！")
     }
   }
