@@ -295,9 +295,9 @@
               <input type="file" id="upload_dir" webkitdirectory directory />
             </li>
             <li>
-              <div id="uploadDirLog" style="height: 300px;overflow-y: auto;">
+              <ul id="uploadDirLog" style="height: 300px;overflow-y: auto;">
 
-              </div>
+              </ul>
             </li>
             <li>
               <table class="table-borderless">
@@ -766,22 +766,25 @@
           var action = document.getElementById("uploadDirAction")
 
           console.log("正在读取文件：" + current_file.name);
-          log_dir.innerHTML += "正在读取文件：" + current_file.name + "&lt;br&gt;"
+          log_dir.innerHTML += "<li>正在读取文件：" + current_file.name + "</li>"
           action.innerHTML = "正在读取文件：" + current_file.name
+          log_dir.scrollTop = log_dir.scrollHeight
 
           const fileReader = new SyncFileReader(current_file);
           const arrayBuffer = await fileReader.readAsBinaryString()
 
 
           console.log("读取完毕，正在计算文件指纹。。。");
-          log_dir.innerHTML += "读取完毕，正在计算文件指纹。。。" + "&lt;br&gt;"
+          log_dir.innerHTML += "<li>读取完毕，正在计算文件指纹。。。" + "</li>"
           action.innerHTML = "读取完毕，正在计算文件指纹。。。"
+          log_dir.scrollTop = log_dir.scrollHeight
           var hexHash = new SparkMD5().appendBinary(arrayBuffer).end()
 
           console.log(hexHash)
           console.log("文件指纹计算完毕，正在上传。。。");
-          log_dir.innerHTML += "文件指纹计算完毕，正在上传。。。" + "&lt;br&gt;"
+          log_dir.innerHTML += "<li>文件指纹计算完毕，正在上传。。。" + "</li>"
           action.innerHTML = "文件指纹计算完毕，正在上传。。。"
+          log_dir.scrollTop = log_dir.scrollHeight
 
           var formData = new FormData();
           formData.append("file", current_file)
@@ -805,8 +808,9 @@
           var obj = eval("(" + info + ")");
           if (obj.StatusCode === 2000) {
             console.log(current_file.name + "，上传成功！" + obj.errorMsg)
-            log_dir.innerHTML += current_file.name + "，上传成功！" + obj.errorMsg + "&lt;br&gt;"
+            log_dir.innerHTML += "<li>" + current_file.name + "，上传成功！" + obj.errorMsg + "</li>"
             action.innerHTML = current_file.name + "，上传成功！" + obj.errorMsg
+            log_dir.scrollTop = log_dir.scrollHeight
           } else {
             alert("文件：" + current_file.name + "，上传失败！终止动作！")
             alert(obj.errorMsg)
