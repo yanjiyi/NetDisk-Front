@@ -258,6 +258,7 @@
 
       xhr.send(null)
 
+      console.log(xhr.responseText)
       $("#tasks_container").empty()
       var data = JSON.parse(xhr.responseText)
       var tdArr = document.getElementById("tasks_container")
