@@ -258,16 +258,14 @@
 
       xhr.send(null)
 
-      console.log(xhr.responseText)
+
       $("#tasks_container").empty()
       var data = JSON.parse(xhr.responseText)
       var tdArr = document.getElementById("tasks_container")
 
-      console.log(data)
-
       for(var i=0;i<data.length;i++)
       {
-        if(tasktype_id === data[i].tasktype)
+        if(parseInt(tasktype_id) === data[i].tasktype)
         {
           xhr.open("POST","/api/getUserName?id="+data[i].userid,false)
           xhr.send(null)
