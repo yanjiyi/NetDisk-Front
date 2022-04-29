@@ -196,8 +196,11 @@
       success:function(data){
         for(var i = 0;i<data.length;i++)
         {
-          $('#tasktype').append("<option value='"+data[i].id+"'>"+ data[i].taskname +"</option>")
-          tasktype_list.push(data[i])
+          if(tasktype_list[k].taskname!="Download")
+          {
+            $('#tasktype').append("<option value='"+data[i].id+"'>"+ data[i].taskname +"</option>")
+            tasktype_list.push(data[i])
+          }
         }
 
         $("#tasktype option[value='1']").prop("selected",true)
