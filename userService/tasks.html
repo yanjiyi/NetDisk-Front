@@ -109,13 +109,13 @@
       <nav nav class="navbar navbar-light">
         <ul class="nav nav-pills">
           <li class="nav-item" style="padding-right: 30px;">
-            <select id="taskname" class="btn">
-              <option value="ToMyTasks" selected>和我相关的事务</option>
-              <option value="MyTasks">我创建的事务</option>
+            <select id="taskname" class="btn btn-outline-primary">
+              <option value="ToMyTasks" selected class="btn btn-info">和我相关的事务</option>
+              <option value="MyTasks" class="btn btn-info">我创建的事务</option>
             </select>
           </li>
           <li class="nav-item" style="padding-right: 30px;">
-            <select id="tasktype" class="btn">
+            <select id="tasktype" class="btn btn-info">
               
             </select>
           </li>
@@ -196,7 +196,7 @@
       success:function(data){
         for(var i = 0;i<data.length;i++)
         {
-          $('#tasktype').append("<option value='"+data[i].id+"'>"+ data[i].taskname +"</option>")
+          $('#tasktype').append("<option value='"+data[i].id+"' class='btn btn-info'>"+ data[i].taskname +"</option>")
           tasktype_list.push(data[i])
         }
 
