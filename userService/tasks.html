@@ -188,6 +188,8 @@
 
     var tasktype_list = []
 
+    var first = true;
+
     $.ajax({
       url:"/api/listAllTaskType",
       type:"POST",
@@ -220,6 +222,8 @@
               }
             }
         })
+
+        onGetClick()
       },
       error:function()
       {
@@ -227,7 +231,63 @@
       }
     })
 
-    
+    function findTaskTypeName(id)
+    {
+      for(var i=0;i<tasktype_list.length;i++)
+      {
+        if(tasktype_list[i].id === id)
+        {
+          return tasktype_list[i].taskname
+        }
+      }
+
+      return "不明事务"
+    }
+
+    function onGetClick()
+    {
+      var tasktype_id = $("#tasktype").find("option:selected").val()
+      var taskname = $("#taskname").find("option:selected").val()
+
+      var xhr = new XMLHttpRequest()
+      if(taskname==="ToMyTasks")
+      {
+        xhr.open("POST","/api/listToMyTask",false)
+      }else{
+        xhr.open("POST","/api/listMyTask",false)
+      }
+
+      xhr.send(null)
+
+      $("#tasks_container").empty()
+      var data = JSON.parse(xhr.responseText)
+      var tdArr = document.getElementById("tasks_container")
+
+      for(var i=0;i<data.length;i++)
+      {
+        if(tasktype_id === data[i].tasktype)
+        {
+          xhr.open("POST","/api/getUserName?id"=data[i].userid,false)
+          xhr.send(null)
+          var userName = xhr.responseText
+          
+          xhr.open("POST","/api/getUserName?id"=data[i].targetid,false)
+          xhr.send(null)
+          var targetName = xhr.responseText
+
+          var td = document.createElement("td")
+          td.innerHTML = "<td>" + data[i].id + "</td><td>" +  findTaskTypeName(data[i].tasktype) + "</td><td>" + userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(data[i].date) + "</td><td>" + (data[i].taskstatus ? "正常" : "等待") + "</td><td>" + (data[i].idle ? "已被处理" : "未被处理") + "</td><td><button class='btn btn-outline-danger' onclick='DeleteTask(" + data[i].id + ")'>删除</button><button class='btn btn-outline-secondary' onclick='Detial(" + data[i].id + ")'>详细</button></td>";
+          tdArr.appendChild(td)
+        }
+      }
+
+      if(first)
+      {
+        page = new Page(5,'task_table','tasks_container','pageindex')
+      }else{
+        page.reload()
+      }
+    }
   </script>
 </body>
 
