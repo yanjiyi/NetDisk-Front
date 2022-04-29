@@ -196,35 +196,11 @@
       success:function(data){
         for(var i = 0;i<data.length;i++)
         {
-          if(data[i].taskname!="Download")
-          {
-            $('#tasktype').append("<option value='"+data[i].id+"'>"+ data[i].taskname +"</option>")
-            tasktype_list.push(data[i])
-          }
+          $('#tasktype').append("<option value='"+data[i].id+"'>"+ data[i].taskname +"</option>")
+          tasktype_list.push(data[i])
         }
 
         $("#tasktype option[value='1']").prop("selected",true)
-
-
-        $('#taskname').change(function(){
-            if($("#taskname").find("option:selected").text()==="和我相关的事务")
-            {
-              $("#tasktype").empty()
-              for(var k=0;k<tasktype_list.length;k++)
-              {
-                if(tasktype_list[k].taskname!="Download")
-                {
-                  $('#tasktype').append("<option value='"+tasktype_list[k].id+"'>"+ tasktype_list[k].taskname +"</option>")
-                }
-              }
-            }else{
-              $("#tasktype").empty()
-              for(var k=0;k<tasktype_list.length;k++)
-              {
-                $('#tasktype').append("<option value='"+tasktype_list[k].id+"'>"+ tasktype_list[k].taskname +"</option>")
-              }
-            }
-        })
 
         onGetClick()
       },
