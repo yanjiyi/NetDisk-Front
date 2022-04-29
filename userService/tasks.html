@@ -278,9 +278,10 @@
           xhr.send(null)
           var targetName = xhr.responseText
 
-          var td = document.createElement("tr")
-          td.innerHTML = "<td>" + data[i].id + "</td><td>" +  findTaskTypeName(data[i].tasktype) + "</td><td>" + userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(data[i].date) + "</td><td>" + (data[i].taskstatus ? "正常" : "等待") + "</td><td>" + (data[i].idle ? "未被处理" : "已被处理") + "</td><td>" + (deletable ? ("<button class='btn btn-outline-danger' onclick='DeleteTask(" + data[i].id + ")'>删除</button>") : "") + "<button class='btn btn-outline-secondary' onclick='Detial(" + data[i].id + ")'>详细</button></td>";
-          tdArr.appendChild(td)
+          var tr = document.createElement("tr")
+          tr.style.lineHeight = '38px';
+          tr.innerHTML = "<td>" + data[i].id + "</td><td>" +  findTaskTypeName(data[i].tasktype) + "</td><td>" + userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(data[i].date) + "</td><td>" + (data[i].taskstatus ? "正常" : "等待") + "</td><td>" + (data[i].idle ? "未被处理" : "已被处理") + "</td><td>" + (deletable ? ("<button class='btn btn-outline-danger' onclick='DeleteTask(" + data[i].id + ")'>删除</button>") : "") + "<button class='btn btn-outline-secondary' onclick='Detial(" + data[i].id + ")'>详细</button></td>";
+          tdArr.appendChild(tr)
         }
       }
 
