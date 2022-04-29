@@ -262,6 +262,8 @@
       var data = JSON.parse(xhr.responseText)
       var tdArr = document.getElementById("tasks_container")
 
+      console.log(data)
+
       for(var i=0;i<data.length;i++)
       {
         if(tasktype_id === data[i].tasktype)
