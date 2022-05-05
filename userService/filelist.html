@@ -275,7 +275,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUploadFile()">关闭</button>
-          <button type="button" class="btn btn-primary" onclick="uploadFile()">上传</button>
+          <button type="button"v id="btn_upload" class="btn btn-primary" onclick="uploadFile()">上传</button>
         </div>
       </div>
     </div>
@@ -323,7 +323,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUpLoadDir()">关闭</button>
-          <button type="button" class="btn btn-primary" onclick="uploadDir()">上传</button>
+          <button type="button" id="btn_upload_dir" class="btn btn-primary" onclick="uploadDir()">上传</button>
         </div>
       </div>
     </div>
@@ -460,6 +460,14 @@
 
   var goDirModal = new bootstrap.Modal(document.getElementById('goDirModal'), {
     keyboard: false
+  })
+
+  $('#uploadDirModal').on('hidden.bs.modal',function(){
+    $('#btn_upload_dir').attr("disabled",false)
+  })
+
+  $('#uploadFileModal').on('hidden.bs.modal',function(){
+    $('#btn_upload').attr("disabled",false)
   })
 
   $.ajax({
@@ -634,6 +642,8 @@
       return
     }
 
+    $('#btn_upload').attr("disabled",true)
+
     var formdata = new FormData()
 
     formdata.append("file", document.getElementById("upload_file").files[0])
@@ -739,6 +749,8 @@
     // var filelist = document.getElementById("upload_dir").files[0]
     // console.log(filelist.webkitRelativePath.split("/"))
     stop = false
+    $('#btn_upload_dir').attr('disabled',true)
+
 
     $.ajax({
       url: "/api/pwd",
@@ -862,6 +874,8 @@
             break;
           }
         }
+
+        $('#btn_upload_dir').attr('disabled',false)
 
         $('#dirAni').css('visibility','hidden')
         alert("上传完毕！")
