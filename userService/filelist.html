@@ -239,7 +239,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="uploadFileModal">上传文件</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" id="btn_upload_close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <table class="table table-borderless table-hover">
@@ -274,8 +274,8 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUploadFile()">关闭</button>
-          <button type="button"v id="btn_upload" class="btn btn-primary" onclick="uploadFile()">上传</button>
+          <button type="button" id="btn_upload_close_main" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUploadFile()">关闭</button>
+          <button type="button" id="btn_upload" class="btn btn-primary" onclick="uploadFile()">上传</button>
         </div>
       </div>
     </div>
@@ -466,6 +466,8 @@
 
   $('#uploadFileModal').on('hidden.bs.modal',function(){
     $('#btn_upload').attr("disabled",false)
+    $('#btn_upload_close').attr("disabled",false)
+    $('#btn_upload_close_main').attr("disabled",false)
   })
 
   $.ajax({
@@ -641,6 +643,8 @@
     }
 
     $('#btn_upload').attr("disabled",true)
+    $('#btn_upload_close').attr("disabled",true)
+    $('#btn_upload_close_main').attr("disabled",true)
 
     var formdata = new FormData()
 
