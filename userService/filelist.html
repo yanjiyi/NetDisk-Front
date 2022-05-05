@@ -239,7 +239,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="uploadFileModal">上传文件</h5>
-          <button type="button" id="btn_upload_close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" id="btn_upload_close" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <table class="table table-borderless table-hover">
@@ -274,7 +275,8 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" id="btn_upload_close_main" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopUploadFile()">关闭</button>
+          <button type="button" id="btn_upload_close_main" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick="stopUploadFile()">关闭</button>
           <button type="button" id="btn_upload" class="btn btn-primary" onclick="uploadFile()">上传</button>
         </div>
       </div>
@@ -314,7 +316,8 @@
             <li>
               <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar"
-                  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="upload_dir_topProgress"></div>
+                  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"
+                  id="upload_dir_topProgress"></div>
               </div>
             </li>
           </ul>
@@ -408,8 +411,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade text-center" id="goDirModal" tabindex="-1" aria-labelledby="goDirModal"
-    aria-hidden="true">
+  <div class="modal fade text-center" id="goDirModal" tabindex="-1" aria-labelledby="goDirModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -460,14 +462,14 @@
     keyboard: false
   })
 
-  $('#uploadDirModal').on('hidden.bs.modal',function(){
-    $('#btn_upload_dir').attr("disabled",false)
+  $('#uploadDirModal').on('hidden.bs.modal', function () {
+    $('#btn_upload_dir').attr("disabled", false)
   })
 
-  $('#uploadFileModal').on('hidden.bs.modal',function(){
-    $('#btn_upload').attr("disabled",false)
-    $('#btn_upload_close').attr("disabled",false)
-    $('#btn_upload_close_main').attr("disabled",false)
+  $('#uploadFileModal').on('hidden.bs.modal', function () {
+    $('#btn_upload').attr("disabled", false)
+    $('#btn_upload_close').attr("disabled", false)
+    $('#btn_upload_close_main').attr("disabled", false)
   })
 
   $.ajax({
@@ -642,9 +644,9 @@
       return
     }
 
-    $('#btn_upload').attr("disabled",true)
-    $('#btn_upload_close').attr("disabled",true)
-    $('#btn_upload_close_main').attr("disabled",true)
+    $('#btn_upload').attr("disabled", true)
+    $('#btn_upload_close').attr("disabled", true)
+    $('#btn_upload_close_main').attr("disabled", true)
 
     var formdata = new FormData()
 
@@ -653,6 +655,21 @@
     formdata.append("isDir", false);
     formdata.append("dirName", "")
     formdata.append("fileName", document.getElementById("upload_file").files[0].name)
+
+    var chXhr = new XMLHttpRequest()
+    var chFormData = new FormData()
+    chFormData.append("fileHash", current_md5)
+    chFormData.append("fileName", document.getElementById("upload_file").files[0].name)
+    chXhr.open("POST","/api/checkFile",false)
+    var chResult = JSON.parse(chXhr.responseText)
+    if(chResult.StatusCode === 2000)
+    {
+      document.getElementById("upload_progress").style.width = '100%';
+      alert(chResult.errorMsg)
+      filehashdone = false;
+      location.reload()
+      return;
+    }
 
     $.ajax({
       url: '/api/upload',
@@ -751,7 +768,7 @@
     // var filelist = document.getElementById("upload_dir").files[0]
     // console.log(filelist.webkitRelativePath.split("/"))
     stop = false
-    $('#btn_upload_dir').attr('disabled',true)
+    $('#btn_upload_dir').attr('disabled', true)
 
 
     $.ajax({
@@ -764,7 +781,7 @@
 
         $('#uploadDirLog').empty()
         $('#uploadDirAction').empty()
-        $('#dirAni').css('visibility','visible')
+        $('#dirAni').css('visibility', 'visible')
 
         for (var i = 0; i < filelist_len; i++) {
           var current_file = document.getElementById("upload_dir").files[i];
@@ -786,13 +803,13 @@
                 alert("创建文件夹：" + current_dirs[k] + "失败！终止动作！")
                 // targetDirInPos = false
                 changeWorkDir(origin_dir);
-                $('#dirAni').css('visibility','hidden')
+                $('#dirAni').css('visibility', 'hidden')
                 return
               } else if (!changeWorkDir(targetDir)) {
                 alert("创建文件夹：" + current_dirs[k] + "成功！但CD失败！终止动作！")
                 // targetDirInPos = false
                 changeWorkDir(origin_dir);
-                $('#dirAni').css('visibility','hidden')
+                $('#dirAni').css('visibility', 'hidden')
                 return
               }
               // else{
@@ -807,7 +824,7 @@
           //Dir in pos
           // var hash = hashlist[i]
           // console.log(i)
-          var progressRate = (i/filelist_len) * 100 + '%'
+          var progressRate = (i / filelist_len) * 100 + '%'
           document.getElementById("upload_dir_topProgress").style.width = progressRate;
           document.getElementById("upload_dir_topProgress").innerHTML = i + " of " + filelist_len
 
@@ -835,51 +852,65 @@
           action.innerHTML = "文件指纹计算完毕，正在上传。。。"
           log_dir.scrollTop = log_dir.scrollHeight
 
-          var formData = new FormData();
-          formData.append("file", current_file)
-          formData.append("fileHash", hexHash)
-          formData.append("isDir", false)
-          formData.append("dirName", "emtpy")
-          formData.append("fileName", current_dirs[dirs_len - 1])
+          var chXhr = new XMLHttpRequest()
+          var chFormData = new FormData()
+          chFormData.append("fileHash", hexHash)
+          chFormData.append("fileName", current_dirs[dirs_len - 1])
 
-          var xhr = new XMLHttpRequest()
-          xhr.open("POST", "/api/upload", false)
-          // xhr.upload.addEventListener('progress',function(e){
-          // 	var progressRate = (e.loaded / e.total) * 100 + '%'
+          chXhr.open("POST", "/api/checkFile", false)
+          chXhr.send(chFormData)
+          var checkResult = JSON.parse(chXhr.responseText)
+          if (checkResult.StatusCode === 3300) {
+            var formData = new FormData();
+            formData.append("file", current_file)
+            formData.append("fileHash", hexHash)
+            formData.append("isDir", false)
+            formData.append("dirName", "emtpy")
+            formData.append("fileName", current_dirs[dirs_len - 1])
 
-          // 	// $('.progress > div').css('width',progressRate);
+            var xhr = new XMLHttpRequest()
+            xhr.open("POST", "/api/upload", false)
+            // xhr.upload.addEventListener('progress',function(e){
+            // 	var progressRate = (e.loaded / e.total) * 100 + '%'
 
-          // 	document.getElementById("uploaddir_progress").style.width = progressRate;
-          // })
-          xhr.send(formData)
+            // 	// $('.progress > div').css('width',progressRate);
 
-          var info = xhr.responseText
-          var obj = eval("(" + info + ")");
-          if (obj.StatusCode === 2000) {
-            console.log(current_file.name + "，上传成功！" + obj.errorMsg)
-            log_dir.innerHTML += "<li>" + current_file.name + "，上传成功！" + obj.errorMsg + "</li>"
-            action.innerHTML = current_file.name + "，上传成功！" + obj.errorMsg
+            // 	document.getElementById("uploaddir_progress").style.width = progressRate;
+            // })
+            xhr.send(formData)
+
+            var info = xhr.responseText
+            var obj = eval("(" + info + ")");
+            if (obj.StatusCode === 2000) {
+              console.log(current_file.name + "，上传成功！" + obj.errorMsg)
+              log_dir.innerHTML += "<li>" + current_file.name + "，上传成功！" + obj.errorMsg + "</li>"
+              action.innerHTML = current_file.name + "，上传成功！" + obj.errorMsg
+              log_dir.scrollTop = log_dir.scrollHeight
+            } else {
+              alert("文件：" + current_file.name + "，上传失败！终止动作！")
+              alert(obj.errorMsg)
+              changeWorkDir(origin_dir);
+              $('#dirAni').css('visibility', 'hidden')
+              return
+            }
+          }else{
+            console.log(current_file.name + "，上传成功！")
+            log_dir.innerHTML += "<li>" + current_file.name + "，上传成功！" + "</li>"
+            action.innerHTML = current_file.name + "，上传成功！"
             log_dir.scrollTop = log_dir.scrollHeight
-          } else {
-            alert("文件：" + current_file.name + "，上传失败！终止动作！")
-            alert(obj.errorMsg)
-            changeWorkDir(origin_dir);
-            $('#dirAni').css('visibility','hidden')
-            return
           }
           //还原最开始工作路径
           // targetDir = origin_dir
 
-          if(stop)
-          {
+          if (stop) {
             stop = false;
             break;
           }
         }
 
-        $('#btn_upload_dir').attr('disabled',false)
+        $('#btn_upload_dir').attr('disabled', false)
 
-        $('#dirAni').css('visibility','hidden')
+        $('#dirAni').css('visibility', 'hidden')
         alert("上传完毕！")
         changeWorkDir("/")
         location.reload()
@@ -1137,19 +1168,16 @@
     }
   }
 
-  function onGoDirClick()
-  {
-    if(changeWorkDir(document.getElementById('goDirName').value))
-    {
+  function onGoDirClick() {
+    if (changeWorkDir(document.getElementById('goDirName').value)) {
       location.reload()
-    }else{
+    } else {
       alert("跳转失败！")
     }
 
   }
 
-  function showGoDirModal()
-  {
+  function showGoDirModal() {
     goDirModal.show()
   }
 </script>
