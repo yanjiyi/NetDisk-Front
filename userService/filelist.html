@@ -1080,8 +1080,6 @@
     var xhr = new XMLHttpRequest()
     xhr.open("POST", "/api/deleteService?id=" + id, false)
     xhr.send(null)
-
-    deleteModal.hide()
     location.reload()
   }
 
