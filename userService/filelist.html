@@ -661,6 +661,7 @@
     chFormData.append("fileHash", current_md5)
     chFormData.append("fileName", document.getElementById("upload_file").files[0].name)
     chXhr.open("POST","/api/checkFile",false)
+    chXhr.send(chFormData)
     var chResult = JSON.parse(chXhr.responseText)
     if(chResult.StatusCode === 2000)
     {
