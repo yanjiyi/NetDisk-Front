@@ -431,6 +431,23 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModal">删除</h5>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body">
+          <p>正在删除...</p>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
 </body>
 <script type="text/javascript">
   var page = null
@@ -1053,11 +1070,18 @@
 
   }
 
+  var deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"),{
+    keyboard: false
+  })
+
   function onDeleteClick(id) {
+    deleteModal.show()
+
     var xhr = new XMLHttpRequest()
     xhr.open("POST", "/api/deleteService?id=" + id, false)
     xhr.send(null)
-
+    
+    deleteModal.hide()
     location.reload()
   }
 
