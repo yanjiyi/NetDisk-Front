@@ -80,7 +80,7 @@
 
   <script type="text/javascript">
     function refresh() {
-      document.getElementById("verifyCodeImg").src = "/api/verifyCode";
+      document.getElementById("verifyCodeImg").src = "/api/verifyCode?r="+Math.random();
     }
 
     function go_login() {
