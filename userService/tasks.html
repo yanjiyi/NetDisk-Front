@@ -286,7 +286,12 @@
       var additional = ""
 
       if (obj.additional > 0) {
-        additional = obj.additional
+        // additional = obj.additional
+        xhr.open("POST","/api/queryService?id="+obj.additional,false)
+        xhr.send(null)
+        var service = JSON.parse(xhr.responseText)
+
+        additional = service.userfilename
       } else {
         additional = obj.aria2id
       }
