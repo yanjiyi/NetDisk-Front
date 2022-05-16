@@ -310,7 +310,7 @@
       tr.style.lineHeight = '38px';
       tr.innerHTML = "<td>" + obj.id + "</td><td>" + findTaskTypeName(obj.tasktype) + "</td><td>" +
         userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(obj.date) + "</td><td>" + "<td>" +
-        additional + "</td>" + (obj.taskstatus ? "正常" : "等待") + "</td><td>" + (obj.idle ? "未被处理" : "已被处理") + "</td><td>" +
+        additional + "</td><td>" + (obj.taskstatus ? "正常" : "等待") + "</td><td>" + (obj.idle ? "未被处理" : "已被处理") + "</td><td>" +
         "<button class='btn btn-outline-secondary' onclick='Detial(" + obj.id + ")'>详细</button></td>";
       tdArr.appendChild(tr)
 
