@@ -116,7 +116,7 @@
           </li>
           <li class="nav-item" style="padding-right: 30px;">
             <select id="tasktype" class="btn btn-outline-primary">
-              
+
             </select>
           </li>
           <li class="nav-item" style="padding-right: 30px;">
@@ -164,8 +164,47 @@
     </div>
   </div>
 
+  <div class="modal fade text-center" id="detailDodal" tabindex="-1" aria-labelledby="detailDodal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailDodal">详细</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-borderless table-hover table-striped table-responsive" id="taskdetail_table">
+            <tr class="table-active">
+              <td>事务ID</td>
+              <td>事务类型</td>
+              <td>发起用户</td>
+              <td>目标用户</td>
+              <td>创建日期</td>
+              <td>附件</td>
+              <td>事务状态</td>
+              <td>事务是否已被处理</td>
+              <td>操作</td>
+            </tr>
+
+            <tbody id="tasksdetail_container">
+
+            </tbody>
+
+
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript">
     var page = null
+
+    var detailModal = new bootstrap.Modal(document.getElementById('detailDodal'), {
+      keyboard: false
+    })
 
     $.ajax({
       url: "/api/getUser",
@@ -191,31 +230,27 @@
     var first = true;
 
     $.ajax({
-      url:"/api/listAllTaskType",
-      type:"POST",
-      success:function(data){
-        for(var i = 0;i<data.length;i++)
-        {
-          $('#tasktype').append("<option value='"+data[i].id+"' class='btn'>"+ data[i].taskname +"</option>")
+      url: "/api/listAllTaskType",
+      type: "POST",
+      success: function (data) {
+        for (var i = 0; i < data.length; i++) {
+          $('#tasktype').append("<option value='" + data[i].id + "' class='btn'>" + data[i].taskname +
+            "</option>")
           tasktype_list.push(data[i])
         }
 
-        $("#tasktype option[value='1']").prop("selected",true)
+        $("#tasktype option[value='1']").prop("selected", true)
 
         onGetClick()
       },
-      error:function()
-      {
+      error: function () {
         alert("获取事务类型失败！")
       }
     })
 
-    function findTaskTypeName(id)
-    {
-      for(var i=0;i<tasktype_list.length;i++)
-      {
-        if(tasktype_list[i].id === id)
-        {
+    function findTaskTypeName(id) {
+      for (var i = 0; i < tasktype_list.length; i++) {
+        if (tasktype_list[i].id === id) {
           return tasktype_list[i].taskname
         }
       }
@@ -223,15 +258,14 @@
       return "不明事务"
     }
 
-    function DeleteTask(id)
-    {
+    function DeleteTask(id) {
       var xhr = new XMLHttpRequest()
-      xhr.open("POST","/api/getTaskDeleteUrl?id="+id,false)
+      xhr.open("POST", "/api/getTaskDeleteUrl?id=" + id, false)
       xhr.send(null)
 
       var url = xhr.responseText
 
-      xhr.open("POST",url+"?taskid="+id,false)
+      xhr.open("POST", url + "?taskid=" + id, false)
       xhr.send(null)
 
       var data = JSON.parse(xhr.responseText)
@@ -240,25 +274,56 @@
       location.reload()
     }
 
-    function Detial(id)
-    {
+    function Detial(id) {
+      var xhr = new XMLHttpRequest()
+      xhr.open("POST", "/api/queryTask?id=" + id, false)
+      xhr.send(null)
+
+      var obj = JSON.parse(xhr.responseText)
+
+      $('#tasksdetail_container').empty()
+
+      var additional = ""
+
+      if (obj.additional > 0) {
+        additional = obj.additional
+      } else {
+        additional = obj.aria2id
+      }
+
+      var tdArr = document.getElementById("tasksdetail_container")
+
+      xhr.open("POST", "/api/getUserName?id=" + data[i].userid, false)
+      xhr.send(null)
+      var userName = xhr.responseText
+
+      xhr.open("POST", "/api/getUserName?id=" + data[i].targetid, false)
+      xhr.send(null)
+      var targetName = xhr.responseText
+
+      var tr = document.createElement("tr")
+      tr.style.lineHeight = '38px';
+      tr.innerHTML = "<td>" + obj.id + "</td><td>" + findTaskTypeName(obj.tasktype) + "</td><td>" +
+        userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(obj.date) + "</td><td>" + "<td>" +
+        additional + "</td>" + (obj
+          .taskstatus ? "正常" : "等待") + "</td><td>" + (obj.idle ? "未被处理" : "已被处理") + "</td><td>" +
+        "<button class='btn btn-outline-secondary' onclick='Detial(" + obj.id + ")'>详细</button></td>";
+      tdArr.appendChild(tr)
 
     }
 
-    function onGetClick()
-    {
+    function onGetClick() {
       var tasktype_id = $("#tasktype").find("option:selected").val()
       var taskname = $("#taskname").find("option:selected").val()
 
       var deletable = true;
-      
+
       var xhr = new XMLHttpRequest()
-      if(taskname==="ToMyTasks")
-      {
-        xhr.open("POST","/api/listToMyTask",false)
+      if (taskname === "ToMyTasks") {
+        xhr.open("POST", "/api/listToMyTask", false)
         deletable = false;
-      }else{
-        xhr.open("POST","/api/listMyTask",false)
+      } else {
+        xhr.open("POST", "/api/listMyTask", false)
       }
 
       xhr.send(null)
@@ -268,29 +333,30 @@
       var data = JSON.parse(xhr.responseText)
       var tdArr = document.getElementById("tasks_container")
 
-      for(var i=0;i<data.length;i++)
-      {
-        if(parseInt(tasktype_id) === data[i].tasktype)
-        {
-          xhr.open("POST","/api/getUserName?id="+data[i].userid,false)
+      for (var i = 0; i < data.length; i++) {
+        if (parseInt(tasktype_id) === data[i].tasktype) {
+          xhr.open("POST", "/api/getUserName?id=" + data[i].userid, false)
           xhr.send(null)
           var userName = xhr.responseText
-          
-          xhr.open("POST","/api/getUserName?id="+data[i].targetid,false)
+
+          xhr.open("POST", "/api/getUserName?id=" + data[i].targetid, false)
           xhr.send(null)
           var targetName = xhr.responseText
 
           var tr = document.createElement("tr")
           tr.style.lineHeight = '38px';
-          tr.innerHTML = "<td>" + data[i].id + "</td><td>" +  findTaskTypeName(data[i].tasktype) + "</td><td>" + userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(data[i].date) + "</td><td>" + (data[i].taskstatus ? "正常" : "等待") + "</td><td>" + (data[i].idle ? "未被处理" : "已被处理") + "</td><td>" + (deletable ? ("<button class='btn btn-outline-danger' onclick='DeleteTask(" + data[i].id + ")'>删除</button>") : "") + "<button class='btn btn-outline-secondary' onclick='Detial(" + data[i].id + ")'>详细</button></td>";
+          tr.innerHTML = "<td>" + data[i].id + "</td><td>" + findTaskTypeName(data[i].tasktype) + "</td><td>" +
+            userName + "</td><td>" + targetName + "</td><td>" + timestampToTime(data[i].date) + "</td><td>" + (data[i]
+              .taskstatus ? "正常" : "等待") + "</td><td>" + (data[i].idle ? "未被处理" : "已被处理") + "</td><td>" + (deletable ? (
+              "<button class='btn btn-outline-danger' onclick='DeleteTask(" + data[i].id + ")'>删除</button>") : "") +
+            "<button class='btn btn-outline-secondary' onclick='Detial(" + data[i].id + ")'>详细</button></td>";
           tdArr.appendChild(tr)
         }
       }
 
-      if(first)
-      {
-        page = new Page(5,'task_table','tasks_container','pageindex')
-      }else{
+      if (first) {
+        page = new Page(5, 'task_table', 'tasks_container', 'pageindex')
+      } else {
         page.reload()
       }
     }
