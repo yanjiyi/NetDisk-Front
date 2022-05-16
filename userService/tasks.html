@@ -298,11 +298,11 @@
 
       var tdArr = document.getElementById("tasksdetail_container")
 
-      xhr.open("POST", "/api/getUserName?id=" + data[i].userid, false)
+      xhr.open("POST", "/api/getUserName?id=" + obj.userid, false)
       xhr.send(null)
       var userName = xhr.responseText
 
-      xhr.open("POST", "/api/getUserName?id=" + data[i].targetid, false)
+      xhr.open("POST", "/api/getUserName?id=" + obj.targetid, false)
       xhr.send(null)
       var targetName = xhr.responseText
 
